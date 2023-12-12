@@ -1,0 +1,120 @@
+With a notion for the arithmetic complexity of a point in projective space established,
+we are now ready to extend this definition considerably. 
+Indeed, there exists a very natural method to extend to a much wider class of geometries.
+
+\begin{definition}
+    Let $\varphi : X/k \to \bbP^n$ be a morphism.
+    We may take the \textit{(absolute logarithmic) height on $X$ relative to $\varphi$} as $h : V(\ol{\Q}) \to [0, \infty)$ defined by $h_\varphi(P) = h(\varphi(P))$.
+\end{definition}
+
+One should note that for a given quasi-projective variety over $\ol{\Q}$,
+there are always many maps which one can construct to projective space.
+This does make sense, however,
+since arithmetic complexity will naturally depend on the choices we are using to analyze our space,
+just as much as it matters where we fix the origin on the number line when setting up height functions for the abstract curve $\bbP^1(\Q)$ itself.
+Fortunately, when our choices of maps are similar with respect to the underlying geometry,
+there is a strong relationship between the resulting height functions.
+
+Indeed, for a projective variety $X/k$,
+when $\varphi : X \to \bbP^n$ and $\psi : X \to \bbP^m$ are morphisms for which $\cL_1 = \phi^*\cO_{\bbP^n}(1)$ and $\cL_2 = \psi^*\cO_{\bbP^m}(1)$ are isomorphic,
+we in particular have $\Gamma(X, \cL_1) \cong \Gamma(X, \cL_2)$ as a $k = \Gamma(X, \cO_X)$ module.
+Thus, we may express the generating global sections of one module as a linear combination of global sections from another.
+Then regarding these sheaves of modules as a $\cO_X$-module of $K(X)$,
+the associated maps to projective space may be composed with a $k$-linear map to obtain the other.
+As a result, we may state the following theorem.
+
+\begin{theorem}
+    Let $X/k$ be a projective variety and $k$ a number field,
+    and consider two morphisms $\varphi : X \to \bbP^n$ and $\psi : X \to \bbP^m$.
+    Suppose as well that $\phi^*\cO_{\bbP^n}(1) \cong \psi^*\cO_{\bbP^m}(1)$.
+    Then there exists some constant $C > 0$ such that for any $P \in X(k)$,
+    \[
+        |h_\varphi(P) - h_\psi(P)| \leq C.
+    \]
+\end{theorem}
+
+\begin{proof}
+    In addition to the discussion above,
+   we refer to Theorem B.3.1 of \cite{Silverman_Hindry_2013}.
+\end{proof}
+
+Using this fact, let's consider the maps associated to the base point free divisors on some variety $X/k$.
+Immediately, we note that the choice of basis for $L(D)$ does not matter up to an $O(1)$ constant by the previous proposition.
+Also, when $D_1 \sim D_2$ for $D_1, D_2 \in \Div(X)$,
+it is also immediate that a basis $\{f_0, \ldots, f_n\}$ of $L(D_1)$ grants a basis $\{f_0g, \ldots, f_2g\}$ of $L(D_2)$ provided $D_1 = D_2 + \rmDiv(g)$,
+so these maps agree away from the support of $\rmDiv(g)$ since
+\[
+    \varphi_D(x) = (f_0(x) : \cdots : f_n(x)) = (f_0(x)g(x) : \cdots : f_n(x)g(x)).
+\]
+Thus, we have a well-defined notion of heights associated to base point divisors in our Picard group up to $O(1)$, 
+which we denote as $h_D$ for any $D \in \Div(X)$.
+
+To extend this a bit, note that for any base point free divisors $D_1, D_2 \in \Div(X)$,
+if we have $L(D_1) = \Span_k\{f_i\}_{i = 0}^n$ and $L(D_2) = \Span_k\{g_j\}_{0 = 1}^m$,
+then there is some subset $I \subseteq \{(i, j) : 0 \leq i \leq n, 0 \leq j \leq m\}$ such that $L(D_1 + D_2) = \Span_k\{f_ig_j\}_{(i, j) \in I}$.
+Using this, and the fact that there is some linear map $A : k^{|I|} \to k^{nm + n + m}$ such that $A((f_ig_j)_{_{(i, j) \in I}}) = (f_ig_j)_{0 \leq i \leq n, 0 \leq j \leq m}$,
+for any $P \in X(k)$,
+\begin{align*}
+    [k : \Q] h_{D_1 + D_2}(P)
+    & = [k : \Q] h(\phi_{D_1 + D_2}(P))(P) \\
+    & = h(A(\phi_{D_1 + D_2}(P))) + O(1) \\
+    & = \sum_{v \in M_k} \max_{\substack{
+        0 \leq i \leq n \\
+        0 \leq j \leq m
+    }} \log \|f_i(P) g_j(P)\|_v + O(1) \\
+    & = \sum_{v \in M_k} \max_{0 \leq i \leq n} \log \|f_i(P)\|_v
+        + \sum_{v \in M_k}  \max_{0 \leq j \leq m} \log \|g_j(P)\|_v
+        + O(1) \\
+    & = [k : \Q](h_{D_1}(P) + h_{D_2}(P)) + O(1),
+\end{align*}
+implying $h_{D_1 + D_2} = h_{D_1} + h_{D_2}$.
+Therefore, since we find that for any $D \in \Div(X)$,
+we may always find base point free divisors $D_1, D_2 \in \Div(X)$ for which $D = D_1 - D_2$,
+we may extend our notion to all such divisors in this additive way,
+which is well-defined up to $O(1)$.
+This map is referred to as \textit{Weil's Height Machine},
+and we will explore how the geometric and algebraic way the divisor class group behaves on our space correspondingly affects the arithmetic of rational points.
+
+While we have explored additivity, linear equivalence, and some aspects of uniqueness,
+there are a few other properties which make our height machine very useful.
+
+\begin{theorem}
+    Let the map $D \mapsto h_D$ be the association of height functions to divisors described above.
+    Letting $X$ and $Y$ be a variety over a number field $k$ and $D_1, D_2 \in \Div(X)$,
+    we have the following properties.
+    \begin{enumerate}
+        \item (Uniqueness)
+        The properties described here force a unique choice of height functions, 
+        as constructed above, up to $O(1)$ equivalence.
+        It is in fact possible as well to give effective bounds with respect to the defining equations of varieties, divisors, and morphisms.
+
+        \item (Normalization)
+        Let $H \subseteq \bbP^n$ be a hyperplane.
+        Then $h_H = h + O(1)$,
+        where $h : \bbP^n(\ol \Q) \to [0, \infty)$ is the absolute logarithmic height.
+
+        \item (Functiorality)
+        Let $\varphi : X \to Y$ be a morphism of varieties and fix $D \in \Div(Y)$,
+       then $h_{\varphi^* D} = h_D \circ \varphi + O(1)$.
+
+       \item (Additivity)
+       $h_{D_1 + D_2} = h_{D_1} + h_{D_2} + O(1)$.
+
+       \item (Linear Equivalence)
+       If $D_1$ is linearly equivalent to $D_2$,
+       then $h_{D_1} = h_{D_2} + O(1)$.
+
+       \item (Positivity)
+       If $D_1$ is effective and $U$ is an open subset on which none of the global sections of $\cL(D)$ vanish
+       then $h_{D_1}|_U \geq O(1)$.
+
+       \item (Northcott Property)
+       Suppose that $D_1$ is ample.
+       Then for any finite extension $k_2/k$ and $M > 0$,
+       there are only finitely many $P \in V(k')$ for which $h_D(P) \leq B$.
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    We refer to the proof of Theorem B.3.2 of \cite{Silverman_Hindry_2013} for more details.
+\end{proof}

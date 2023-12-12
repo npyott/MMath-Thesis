@@ -1,0 +1,166 @@
+We begin this section by recalling our projective height definition on $\bbP^1$.
+Fixing $(x : 1) \in \bbP(k) \sm \{ (0 : 1) \}$ for some finite extension $k / \Q$,
+we recall
+\[
+    h(x : 1) 
+    = h(1 : x^{-1}) 
+    = \frac{1}{[k : \Q]}\sum_{v \in M_k} \max\{-\log \|x\|_v, 0\}.
+\]
+To simplify things,
+we may consider for each $v \in M_k$ an associated function $v^+ : k_v^* \to \R_{\geq 0}$ given by ${v^+(x) = \frac{1}{[k : \Q]}\max\{-\log\|x\|_v, 0\}}$.
+From here, it is clear that $v^+$ is morally behaving as minus the logarithm of $v$-adic distance function from $x \in k_v^*$ to $0 \in k_v$.
+
+In particular, we see that the height $h(x : 1)$ is broken down as the $v$-adic distances from $(x: 1)$ to the point $(0 : 1)$.
+Fundamentally, this is an interesting example since the divisor given by $(0 : 1)$ corresponds to the invertible sheaf $\cO(1)$,
+which is exactly the identity embedding on $\bbP^1$ as we would hope.
+Overall, we would like to show that we could think of our height functions as the sum of $v$-adic distances to the divisor in question.
+
+To explore local heights further, fix a base field $k$ which is a finite extension of $\Q$,
+and let $X/k$ be a projective variety.
+For each $v \in M_k$, writing $k_v$ as the completion of $k$ with respect to this place and $v : k^\times \to \R$ as the function $v(x) = -\frac{1}{[k_v : \Q_v]} \log \|x\|_v$,
+we may endow $X(k_v)$ with a minimal topology containing the Zariski open sets, 
+and such that $P \mapsto \log v(f(P))$ is continuous away from the poles and zeroes of $f \in K(x)$. 
+
+With this topology, for a given divisor $D$,
+we would like to describe a family of functions $(\lambda_v)_{v \in M_k}$ such that
+\[
+    \lambda_v : (X \sm \supp(D))(k_v) \to \R
+\]
+is continuous and roughly approximates the negative logarithm of $v$-adic distance to $D$ in the sense that if $D|_U$ is given by $\rmDiv(f)$, we have
+
+\[
+    \sum_{v \in M_k} |\lambda_v(P) - v(f(P))| = O(1).
+\]
+
+\begin{definition}
+    Let $X/k$ be a projective variety with $k$ a number field.
+    A family of functions $(\gamma_v)_{v \in M_k}$, with $\gamma_v : X(k_v) \to \R$,
+    is an \textit{$M_k$-constant} when each $\gamma_v$ is constant and $\gamma_v \neq 0$ for only finitely many $v \in M_k$.
+    If we are given a similar family of functions $(\alpha_v)_{v \in M_K}$ and $(\beta_v)_{v \in M_k}$,
+    we write $\alpha_v = \beta_v + O_v(1)$ if their difference is an $M_k$-constant.
+\end{definition}
+
+We also speak towards bounded regions.
+
+\begin{definition}
+    Let $X/k$ be a variety and consider a family of subset $S = (S_v)_{v \in M_k}$ for which $S_v \subseteq X(k_v)$.
+    We say that the family $S$ is \textit{affine $M_k$-bounded} when there exists some affine open subset $U \subseteq X$ and $M_k$ constant $\gamma$,
+    with coordinates $(x_1, \ldots, x_n)$,
+    such that for any $v \in M_k$ and $(x_1, \ldots, x_n) \in S_v \cap U(k_v)$,
+    \[
+        \min_{1 \leq i \leq n}  v(x_i) \geq -\gamma_v.
+    \]
+    We say that a family $S$ is \textit{$M_k$-bounded} when we may cover our family with finitely many affine $M_k$-bounded families.
+\end{definition}
+
+\begin{proposition}
+    Let $X/k$ be a projective variety. 
+    Then the family $(X(k_v))_{v \in M_k}$ is $M_k$-bounded.
+\end{proposition}
+
+\begin{proof}
+    See Proposition 10.1.2 of \cite{Lang_2013}.
+\end{proof}
+
+With the above in mind,
+we would like to be able to write for a Cartier divisor $D = \{(U_i, f_i)\}$,
+and associated family $\lambda = (\lambda_v)_{v \in M_k}$ for which we have for all $P \in U_i(k_v)$ which is neither a pole nor zero of $f_i$,
+\[
+    \lambda_v(P) - v(f(P))
+\]
+is continuous and bounded above and below by a predetermined $M_k$ constant on all $M_k$-bounded families of $U_i$.
+This condition simplifies in projective space as we just require that we are bounded by an $M_k$-constant.
+We often attribute a family of functions $\alpha_i = (\alpha_{i, v})_{v \in M_k}$ to represent this difference
+\[
+    \lambda_v = v \circ f_i + \alpha_{i,v},
+\]
+and would then require that $v \circ f_i f_j^{-1} = \alpha_{j, v} - \alpha_{i, v}$ on the intersections $U_i \cap U_j$.
+Such functions are referred to as \textit{Weil functions}, or \textit{local height functions},
+and we consequently obtain the following properties.
+
+\begin{theorem}
+    Let $X/k$ be a non-singular projective variety and $D$ a Cartier divisor.
+    A Weil function $\lambda_D$ associated to $D$ satisfies the following properties.
+    \begin{enumerate}
+        \item (Uniqueness)
+        If $\lambda'_D$ satisfies the same difference requirement as above,
+        then $\lambda_{D,v} = \lambda'_{D,v} + O_v(1)$.
+
+        \item (Additivity)
+        For another divisor $E \in \Div(X)$, we have $\lambda_{D_1 + D_2, v} = \lambda_{D_1, v} + \lambda_{D_2, v} + O_v(1)$.
+
+        \item (Functiorality)
+        Given a morphism $\varphi: X \to Y$ of non-singular projective varieties and $E \in \Div(Y)$,
+        we find that $\lambda_{\varphi^* E, v} = \lambda_{E, v} \circ \varphi + O_v(1)$
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    The above properties are given in Proposition 10.2.1, Proposition 10.2.2, and Proposition 10.2.5 of \cite{Lang_2013}.
+\end{proof}
+
+To explore this relationship further, consider the following proposition.
+
+\begin{proposition}
+    Let $X/k$ be a non-singular projective variety,
+    and let $D, D_1, \ldots, D_n \in \Div(X)$ a family of divisors such that $\cap_{1 \leq i \leq n} \supp(D_i) = \emptyset$.
+    Then we may calculate for any $v \in M_k$ and $P \in (X \sm \supp(D))(k_v)$ that
+    \[
+        \lambda_{D, v} = \min_{1 \leq i \leq n} \lambda_{D + D_i, v}(P),
+    \]
+    where the minima only takes into account $1 \leq i \leq n$ for which $P \notin \supp(D_i)$. 
+\end{proposition}
+
+\begin{proof}
+    See Proposition 10.3.2 in \cite{Lang_2013}.
+\end{proof}
+
+As a consequence, we may construct a Weil function for any divisor.
+To do so, fix some $D \in \Div(X)$ and choose $E_1, \ldots, E_n$ and $F_1, \ldots, F_m \in \Div(X)$ such that 
+\[
+    \bigcap_{1 \leq i \leq n} \supp(E_i)
+    = \bigcap_{1 \leq j \leq m} \supp(F_i)
+    = \emptyset,
+\]
+and $D + E_i = F_j$ by Lemma 10.3.4 of \cite{Lang_2013}.
+Next, taking $f_{i, j} \in K(X)$ such that $\rmDiv(f_{i,j}) = F_j - D - E_i$ for each $1 \leq i \leq n$ and $1 \leq j \leq m$,
+we may use the following proposition to determine that for all $v \in M_k$, $1 \leq i \leq n$,  and $P \in (X \sm \supp(D + E_i))(k)$,
+\[
+    \lambda_{-D - E_i, v}(P)
+    = \min_{1 \leq j \leq m} \lambda_{F_j - D - E_i, v}(P)
+    = \min_{1 \leq j \leq m} v(f_{i,j}(P)),
+\]
+or $\lambda_{D + E_i} = \max_{1 \leq j \leq m} -v(f_{i,j}(P))$. 
+With one more application of our proposition, we arrive at
+\[
+    \lambda_{D, v}(P)
+    = \max_{1 \leq j \leq m} \min_{1 \leq i \leq n} -v(f_{i,j}(P)).
+\]
+
+This is indeed a very useful way to compute local heights.
+In particular, if we have a hypersurface of $\bbP^n$ defined by a single equation $F(x_0, \ldots, x_n) = 0$ of degree $d$,
+note that we have for each $0 \leq i \leq n$ that
+\[
+    d\{ x_i = 0\} - \{ F(x) = 0 \} = \rmDiv(x_i^d/F(x)).
+\]
+Since $\cap_{0 \leq i \leq n} \{ x_i = 0\} = \emptyset$, we then have
+\[
+    \lambda_{\{F(x) = 0\}}(x) = \max_{0 \leq j \leq m} v(F(x)/x_i^d).
+\]
+
+This very nice computational aspect aside,
+we also have a few other properties which allow local height functions to apply quite generally.
+Referring to Theorem B.8.1 of \cite{Silverman_Hindry_2013}, we write the following.
+
+\begin{theorem}
+    Consider a non-singular projective variety $X/k$ with divisor $D$.
+    Let $D \mapsto \lambda_D$ be the local height machine as described above.
+    We also have the following two properties.
+    \begin{enumerate}
+        \item (Positivity) If $D$ is effective, then $\lambda_{D,v} \geq O_v(1)$.
+        \item (Local to Global Property) We may determine the Weil height $h_D$ by the local heights as
+        \[
+            h_D(P) = \sum_{v \in M_k} \frac{[k_v : \Q_v]}{[k : \Q]} \lambda_{D, v}(P) + O(1).
+        \]
+    \end{enumerate}
+\end{theorem}

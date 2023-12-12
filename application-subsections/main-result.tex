@@ -1,0 +1,87 @@
+We are now ready to go over our main result from \cite{Silverman_2004}.
+
+\begin{theorem}
+    Let $X/k$ be smooth with $Y \subseteq X$ a smooth subvariety of co-dimension $r \geq 2$.
+    Let $A$ be some ample divisor on $X$,
+    and assume that $-K_X$ is a normal crossings anti canonical divisor such that $\supp(-K_X) \cap Y = \emptyset$.
+
+    Assuming Vojta's conjecture,
+    then for every finite set $S \subseteq M_k$ and any $0 < \varepsilon < r - 1$,
+    there is a closed subvariety $Z \subsetneq X$ and a constant $\delta \in \R$,
+    with $\delta$ only depending only on $X$, $Y$, and $A$,
+    such that for any $P \in (X \sm Z)(k)$
+    \[
+        h_{\gcd}(P; Y)
+            \leq \varepsilon h_{A}(P) + \frac{1}{r - 1 + \delta \varepsilon} N_S(-K_X, P) + O(1).
+    \]
+\end{theorem}
+
+\begin{proof}
+    Let $\pi : \wt X \to X$ be the blow up of $X$ with centre $Y$ and exceptional divisor $\pi^{-1}(Y) = E$.
+    We begin by recalling that the canonical bundle $K_{\wt X}$ may be described with the given codimension as
+    \[
+        K_{\wt X} = \pi^* K_X + (r - 1)E,
+    \]
+    up to linear equivalence.
+    Next, since $A$ is an ample divisor,
+    we may find some $m \geq 1$ and $\wt A \in \Pic(\wt X)$ that is ample such that
+    \[
+        \pi^*A = \wt A + m E.
+    \]
+
+    As $\supp(K_X) \cap Y = \emptyset$,
+    it is clear as well that $-\pi^* K_X$ is a normal crossings divisor as $\pi$ is an isomorphism at relevant points.
+    Thus, we are ready to apply Vojta's conjecture to $-\pi^*K_X$ and $\wt A$.
+
+    Taking $\varepsilon > 0$ and $S \subseteq M_k$ as above,
+    we may assume that away from some exceptional proper closed subset $W$,
+    for any $\wt P \in \wt X \sm W$,
+    \begin{align*}
+        & m_S(-\pi^*K_X, \wt P)
+        + h_{K_{\wt X}}(\wt P)
+        \leq \varepsilon h_{\wt A}(\wt P)
+        + O(1) \\
+        \Rightarrow
+        & -m_S(K_X, \pi(\wt P))
+        + h_{K_X}(\pi(\wt P))
+        + (r - 1)h_{E}(\wt P)
+        \leq \varepsilon h_{A}(\pi(\wt P))
+            - \varepsilon m h_{E}(\wt P)
+            + O(1)
+    \end{align*}
+    Next, we may as well assume that $E \subseteq W$,
+    and so there is some $P \in (X \sm Y)(k)$ such that $\pi(P) = \wt P$.
+    Recalling our definition of the generalized GCD,
+    and simplifying using the counting function $N_S(-K_X, P)$,
+    we may then write
+    \[
+        N_S(K_X, P)
+        + (r - 1)h_{\gcd}(P; Y)
+        \leq \varepsilon h_A(P)
+        - \varepsilon m
+        h_{\gcd}(P; Y) + O(1).
+    \]
+    After just one more re-arrangement by grouping terms,
+    and setting $\delta = m$,
+    we finally arrive at
+    \[
+        h_{\gcd}(P; Y)
+        \leq \frac{\varepsilon}{r - 1 + \delta \varepsilon} h_A(P)
+        + \frac{1}{r - 1 + \delta \varepsilon} N_S(K_X, P)+ O(1).
+    \]
+\end{proof}
+
+Notice that the above theorem is indeed a general case of the special result on Vojta's conjecture mentioned in a previous section.
+Indeed, let $C/k$ be an elliptic curve with identity $O \in C$,
+and choose any ample $A$ divisor on $X = C \times C$.
+Notice that since $C$ is an elliptic curve that $K_X = 0$,
+satisfying our necessary conditions and simplifying our inequality.
+Moreover, if $K$ is the canonical divisor on $\pi: \wt X \to X$ blown up at $Y$,
+then $K$ is linearly equivalent to the exceptional divisor by our co-dimension and that the canonical sheaf is trivial on $X$.
+Thus, we may write for $P \in (X \sm Y)(k)$
+\[
+    h_K(\pi^{-1}(P)) 
+    = h_{\gcd}(P; Y) 
+    \leq \varepsilon h_A(P) + O(1)
+    = \varepsilon h_{\pi^* A}(\pi^{-1}(P)) + O(1).
+\]

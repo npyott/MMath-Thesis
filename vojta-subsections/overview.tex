@@ -1,0 +1,133 @@
+At the heart of this paper's conclusion lies a conjecture of Vojta.
+To explore this conjecture further, 
+let's re-examine the Subspace Theorem.
+
+Fix a number field $k$, with algebraic closure $\ol{k}$ and ring of integers $R_k$,
+and let $S \subseteq M_k$ be a finite set of places containing all the archimedean places.
+Let's also consider a set of linearly independent linear forms $L_0, \ldots, L_n \in \ol{k}[x_0, \ldots, x_n]$.
+Taking $\delta > 0$, our inequality of the Subspace Theorem is
+\[
+    \prod_{i = 0}^{n} \prod_{v \in S} \|L_n(x_0, \ldots, x_n)\|_v
+    \geq (\max_{0 \leq i \leq n, v \in M_k^\infty} \|x_i\|_v)^{-\delta},
+\]
+for all $x_0, \ldots, x_k \in R_k$ except for those solutions contained in finitely many hyperplanes.
+However, notice that through scaling both sides of the inequality by the same constant, 
+this inequality may be viewed for points of $\bbP^n(k)$ except for an exceptional union of hyperplanes denoted $Z$.
+
+To proceed, we note by Lemma 2.2.2 of \cite{Vojta_2006} that 
+\[
+    \max_{0 \leq i \leq j, v \in M_K^\infty} \|x_i\|_v
+    \ll H_k(x)
+\]
+So we may generally write that outside of $Z$ we have for $\varepsilon > 0$ sufficiently small that
+\[
+    \prod_{i = 0}^{n} \prod_{v \in S} \|L_n(x)\|_v
+    \geq H(x)^{-\varepsilon}.
+\]
+Notice as well that this reformulation is independent of our base field $k$,
+so long as it is still a finite extension of $\Q$.
+
+Next, consider the divisor $D = \{ L_0 \cdots L_n = 0 \}$.
+We know for each $v \in M_k$ that our corresponding local height function can be written out as
+\[
+    \lambda_{D,v}(x)
+    = \log \max_{1 \leq j \leq n}\left\|
+        \frac{x_j^{n + 1}}{L_0(x) \cdots L_n(x)}
+    \right\|_v
+    = \log \max_{1 \leq j \leq n} \prod_{0 \leq i \leq n} \left\|
+        \frac{x_j}{L_i(x)}
+    \right\|_v.
+\]
+
+Rearranging our main inequality and taking logarithms,
+we may now write that
+\[
+    \sum_{v \in S} \lambda_{D,s}(x)
+    \leq \varepsilon h(x) + (n + 1)\sum_{v \in S} \log \max_{0 \leq j \leq n} \|x_j\|_v.
+\]
+To simplify this, note that $\log \max_{0 \leq j \leq n} \|x_j\|_v \geq O(1)$ for any $v \in M_k^0$.
+To see why, 
+recall that the class group of $R_k$ is finite,
+and so we may fix a subset of small primes to which we scale our coordinates to having potentially positive division at.
+Therefore, we may replace the sum over the places in $S$ with the full sum over all of $M_k$ while preserving inequality.
+
+Lastly, note that on $\bbP^n$,
+our canonical divisor $K_{\bbP^n}$ is given by the invertible sheaf ${\cO(-n - 1)}$, 
+and so we may replace $-(n + 1)h(x) = h_{K_{\bbP^n}}(x) + O(1)$ to obtain
+\[
+    \sum_{v \in S} \lambda_{D,s}(x)
+    + h_{K_{\bbP^n}}(x) \leq \varepsilon h(x) + O(1).
+\]
+
+With the above, 
+we have found that the Subspace Theorem is actually a geometrical result on the space $\bbP^n$.
+To explore this relationship in more generality,
+let's go over some terminology.
+
+\begin{definition}[Proximity Function and Counting Function]
+    Given a divisor $D$ and a finite set of places $S \subseteq M_k$ for a number field $k$,
+    we denote the \textit{proximity function} $m_S(D, P)$ for each $P \notin \supp(D)$ as
+    \[
+        m_S(D, P) = \sum_{v \in S} \lambda_{D,s}(x).
+    \]
+    Intuitively, this is minus the logarithm of the distance from $P$ to $D$ on the places $S$ of interest.
+
+    We similarly define the complimentary \textit{counting function} $N_S(D, P)$ for each $P \notin \supp(D)$ as
+    \[
+        N_S(D, P)
+        = \sum_{v \notin S} \lambda_{D, s}(x)
+        = h_D(P) - m_S(D, P)
+    \]
+\end{definition}
+
+%https://stacks.math.columbia.edu/tag/0CBN
+\begin{definition}[Normal Crossings Divisor]
+        A \textit{strict normal crossings divisor} $D$ on a non-singular scheme $X$ is an effective Cartier divisor $D$,
+        such that for any $P \in D$ as a closed subscheme,
+        there is a $\kappa(P)$ basis for $\Fm_P/\Fm_P^2$ with representatives $f_1, \ldots, f_d \in \Fm_P \sm \Fm_P^2$ for which $D$ is cut out by $f_1, \ldots f_r$ in $\cO_{X,P}$ for some $1 \leq r \leq d$.
+\end{definition}
+
+\begin{remark}
+    Normal crossings divisors generalize the concept of hyperplanes in general position.
+    Indeed, for a projective non-singular variety $X$,
+    we may take a choice of coordinates of the surrounding projective space for which each hyperplane is some coordinate vanishing,
+    and then these coordinates also generate any particular maximal ideal $\Fm_P$ for $P \in X$.
+\end{remark}
+
+\begin{definition}(Big Divisor)
+    A divisor $L$ is said to be \textit{big} if $nL$ is the sum of an effective divisor and ample divisor for sufficiently large $n$.
+\end{definition}
+
+Let's now state Vojta's conjecture in more generality.
+
+\begin{conjecture}(Vojta's Conjecture)
+    Let $X/k$ be a non-singular projective variety and $k$ a number field.
+    We will also take $A$ to be a big divisor on $X$, 
+    $D$ a normal crossings divisor on $X$,
+    and $K$ the canonical divisor class on $X$.
+    Then for any $\varepsilon > 0$,
+    there exists a proper closed subset $Z$,
+    depending on all choices made,
+    such that for any $P \notin Z$
+    \[
+        m_S(D, P) + h_{K}(P) \leq \varepsilon h_A(P) + O(1).
+    \]
+\end{conjecture}
+
+While not much is known with respect to particular cases of Vojta's conjecture,
+we have the following result from \cite{McKinnon_2003} which is applicable to our next section.
+
+\begin{theorem}
+    Let $C/k$ be a smooth elliptic curve where the group $C(\Q)$ is rank one.
+    Suppose that there exists a birational $k$-morphism $f : X \to C \times C$,
+    where $X$ is a non-singular, projective $k$-scheme.
+    Moreover, suppose that the image of the exceptional set is contained in a finite subset of $(C \times C)(k)$.
+    If $L$ is a big divisor on $X$,
+    $D$ is the zero divisor with trivial height function,
+    and $K_X$ is the canonical divisor,
+    then for any $\varepsilon > 0$,
+    there exists an effectively computable proper closed subset $Z \subseteq X$ for which $P \in (X \sm Z)(k)$ implies that
+    \[
+        h_K(P) \leq \varepsilon h_L(P) + O(1).
+    \]
+\end{theorem}

@@ -1,0 +1,92 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[margin=1 in]{geometry}
+\usepackage{rotating} %for \includegraphix[angle=270]
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{bbm}
+%\usepackage{amsmath,amssymb,epsfig,amscd,xy,amsthm}
+%\xyoption{all}
+%\usepackage[active]{srcltx}
+%\CompileMatrices
+\usepackage{enumerate}
+\usepackage{extarrows}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{float}
+
+\usepackage{setspace} \doublespacing
+
+\usepackage{user-commands}
+\usepackage{theorem-commands}
+
+\begin{document}
+
+% BCZ Theorem
+\begin{theorem}
+    Fix some finite set of rational primes $S$ and let $\varepsilon > 0$. For all but finitely many $\alpha, \beta \in \Z_S^* \cap \Z$, we find that either the relation between $\alpha$ and $\beta$ is trivial ($\alpha^m = \beta^n$ for some integers $m, n \leq \varepsilon^{-1}$) or that the GCD of $\alpha -1$ and $\beta - 1$ is relatively small, bounded by the following relation
+    \[
+        \gcd(\alpha - 1, \beta - 1) \leq \max(|\alpha|, |\beta|)^\varepsilon. 
+    \]
+\end{theorem}
+
+% Non-S component
+\begin{definition}
+    Let $S$ be a finite set of rational primes. For any integer $x \in \Z \sm \{ 0 \}$, The ``prime-to$S$" part of $x$, denoted $|x|_S'$, is the unique multiplicative component of $x$ which does not lie over the primes of $S$. That is,
+    \[
+        |x|_S' = |x| \cdot \prod_{p \in S} |x|_p.
+    \]
+\end{definition}
+
+% First Generalization
+\begin{theorem}
+    Let $V \subset \bbP^n$ be a smooth variety of co-dimension $r = n - \dim(V)$ not intersecting any of the hyperplanes $\{x_i = 0\}$ for $0 \leq i \leq n$.
+    Suppose as well that $V$ is given as the vanishing set of some homogeneous polynomials $f_1, \ldots, f_k \in \Z[x_0, \ldots, x_n]$.
+    We will also fix some $\varepsilon > 0$ arbitrarily.
+
+    Suppose that Vojta's conjecture is true in the case of $\bbP^n$ blown up along $V$.
+    Then we may determine some non-zero homogeneous polynomial $g \in \Z[x_0, \ldots, x_n]$ depending on the polynomials defining $V$ and $\varepsilon$, as well as a constant $\delta$ only depending on $f_1, \ldots, f_k$, so that every coprime integer tuple $(a_0, \ldots, a_n) \in \Z^{n + 1}$ is either a root of $g$ or
+    \[
+        \gcd(f_1(a_1, \ldots, a_n), \ldots, f_k(a_1, \ldots, a_n))
+            \leq \max\{|a_0|, \ldots, |a_n|\}^\varepsilon
+                \cdot (|x_0 \cdots x_n|_S')^{\frac{1}{r - 1 + \delta \varepsilon}}.
+    \]
+    
+\end{theorem}
+
+% Move to own section on elliptic curves
+
+\begin{notation}
+    Let $E / \Q$ be an elliptic curve, with rational point $P = (x_P, y_P) \in E(\Q)$.
+    We may then write $x_P$ as $A_P / D_P^2$, with $\gcd(A_P, D_P) = 1$ and $D_P > 0$.
+\end{notation}
+
+\begin{theorem}
+    Let $E/ \Q$ be an elliptic curve given by a Weierstrass equation.
+    Assuming Vojta's conjecture for $E^2$ blown up at $(O_E, O_E)$,
+    we then find that for any $\varepsilon > 0$ that there is a proper closed subvariety $Z \subseteq E^2$ such that for any points $P, Q \in E(\Q) \sm Z$,
+    \[
+        \gcd(D_P, D_Q) \leq (H(P) \cdot H(Q))^\varepsilon,
+    \]
+\end{theorem}
+
+\begin{theorem}
+    Let $E/\Q$ be an elliptic curve with identity $O$ and let $S$ be a finite set of rational primes.
+    Under the condition that Vojta's conjecture holds for $E \times \bbP^1$ blown up at $(O_E, 1)$,
+    we find for every $\varepsilon > 0$, there is a constant $C$ so that for all $Q \in E(\Q)$ and $b \in \Z_S^* \cap \Z$,
+    \[
+        \gcd(D_Q, b - 1) \leq C \cdot \max\{D_Q, b\}^\varepsilon.
+    \]
+\end{theorem}
+
+\end{document}
+
+% Pre requisiste list
+% - Blow-up of surface at point
+% - Heights of projective points
+% - Local heights
+% - Canonical divisor class
+% - Fibred product
+% - Integer models
+% - Divisors and pullbacks

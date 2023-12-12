@@ -1,0 +1,247 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[margin=1 in]{geometry}
+\usepackage{rotating} %for \includegraphix[angle=270]
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{bbm}
+%\usepackage{amsmath,amssymb,epsfig,amscd,xy,amsthm}
+%\xyoption{all}
+%\usepackage[active]{srcltx}
+%\CompileMatrices
+\usepackage{enumerate}
+\usepackage{extarrows}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{float}
+\usepackage{tikz-cd}
+
+\usepackage{setspace} \doublespacing
+
+\usepackage{user-commands}
+\usepackage{theorem-commands}
+
+\begin{document}
+    As with our initial result from BCZ[replace], 
+    a key element to characterizing our result was the arithmetic complexity of a given integer.
+    While it is simple in the case of integers, 
+    we note that we may easily and naturally extend our notion of arithmetic complexity.
+
+    As an example, consider Roth's theorem mentioned previously.
+
+    \begin{theorem}[Roth's Theorem]
+        Given an algebraic number $\alpha \in \R$, for any $\varepsilon > 0$,
+        there exists at most finitely many co-prime integers $p, q \in \Z$ such that
+        \[
+            \left|\alpha - \frac{p}{q}\right| < \frac{1}{|q|^{2 + \varepsilon}}.
+        \]
+    \end{theorem}
+
+    In this example, we have a notion on the arithmetic complexity of a fraction $p/q$ by taking its denominator.
+    It should be noted that only the denominator is considered in this expression of Roth's theorem due to the common analysis of reals in the interval $[0, 1)$.
+    For completeness, we may more symmetrically examine $\max(|p|, |q|)$.
+
+    However, looking at only this norm on the rationals is only half of the picture.
+    We recall that for each prime $p \in \Z$, 
+    that $\Z_{(p)}$ is a discrete valuation ring with $p\Z_{(p)}$ the unique maximal ideal.
+    From this, we obtain a function
+    \[
+        \ord_p : \Z_{(p)} \setminus \{0\} \to \N
+    \]
+    such that $\ord_p(ab) = \ord_p(a) + \ord_p(b)$, $\ord_p(p) = 1$, and $\ord_p(x) = 0$ for any $x \notin p\Z_{(p)}$.
+    Clearly, this corresponds to our notion of the unique power of $p$ in the unique prime factorization of a given integer.
+    
+    Extending this to the field of fractions by preserving our additive rule,
+    we obtain a new \textit{$p$-adic norm} on our rational numbers given for $a \in \Q \setminus \{0\}$ as $|a|_p = p^{-\ord_p(a)}$ and $|0|_p = 0$.
+    We may also note one interesting quirk when verifying our triangle inequality that we rather find an \textit{ultrametric inequality}.
+    For any $a, b \in \Q$, we may show that $|a + b|_p \leq \max\{|a|_p, |b|_p\}$,
+    which easily follows as a result of unique prime factorization.
+    Due to this, the natural numbers are obviously bounded,
+    and hence we refer to such absolute values as \textit{non-archimedean} while our usual absolute value is \textit{archimedean}.
+    We refer to the collection of norms on $\Q$ by the set $M_\Q$ and use the notation $|\cdot|_v$ to represent the $v$-norm.
+
+    With this, we are ready to define the height of a rational number $r \in \Q$. 
+    Looking instead at the rational point $(r : 1) \in \bbP^1$, 
+    which can be re-expressed with co-prime integer coordinates $(a : b)$,
+    we set 
+    \[
+        H_\Q(a : b) = \prod_{v \in M_\Q} \max\{|a|_v, |b|_v\}.
+    \]
+    While this perfectly coincides with our original definition for $\gcd(a, b) = 1$,
+    we also note that this norm is perfectly invariant to the scaling of coordinates as we'd expect for $\bbP^1$.
+    This definition can be easily extended to higher dimensional projective spaces by taking a maximum over more coordinates.
+
+    Next, let's mention how we can extend our notion of algebraic complexity to finite field extensions $k/\Q$.
+    We begin with our non-archimedean norms, denoted $M_k^0$.
+    Setting $R_k$ as our ring of integers and fixing a prime ideal $P \in \Spec(R)$, 
+    note that $R_{k,P}$ is likewise a local ring with a valuation.
+    Therefore, we may similarly obtain a homomorphism $\ord_P : k^* \to \Z$.
+
+    In order to now find an exponential base,
+    we will use $N_{k/\Q}(P) = |R_k / P|$.
+    With this, we take for $x \in k^*$,
+    \[
+        \|x\|_P = N_{k / \Q}(P)^{-\ord_P(x)},
+    \]
+    and of course $\|0\|_P = 0$.
+    In this way, as $R_k / P$ is a finite field and $\Spec(R_k) \to \Spec(\Z)$ puts $R_k$ over some prime $p \in \Z$,
+    we may define all of our p-adic norms on $k$. 
+    Pay special attention to this case as if $p \in \Z$ is still prime over $R_k$,
+    then $N_{k / \Q}(p) = p^{[k : \Q]}$.
+
+    However, we also usually have more than one archimedean norm on $k$ as well.
+    In fact, we obtain one for each real embedding of $k \to \R$,
+    as well as one for each pair of conjugate complex embedding $k \to \C$.
+    Once a particular embedding $\rho : k \to \C$ is chosen,
+    we simply take for $x \in k$
+    \[
+        \|x\|_\rho = |\rho(x)|^{n_\rho},
+    \]
+    where $n_{\rho} = [\F : \R]$ with $\F = \C$ for a complex embedding and $\F = \R$ for a real embedding.
+    We commonly denote the archimedean norms on $k$ as $M^\infty_k$.
+
+    Finally, with an understanding of the set of places $M_k$ of a finite field extension $k/\Q$,
+    we may define our relative heights with respect to a choice of coordinates on $\bbP^n$.
+    Note that $k$-rational points in $\bbP^n$ may be thought of as any point who has some choice of coordinates all lying $k$. 
+
+    \begin{definition}
+        Let $k/\Q$ be a finite field extension.
+        For a point $P = (a_0, \ldots, a_n) \in \bbP^n(k)$,
+        we define the \textit{multiplicative height} as
+        \[
+            H_k(P) = \prod_{v \in M_k} \max\{\|a_0\|_v, \ldots, \|a_n\|_v\}.
+        \]
+        We also define the \textit{logarithmic hieght} as $h_k(P) = H_k(P)$.
+    \end{definition}
+
+    We also attribute a more general height on our projective space.
+
+    \begin{definition}
+        The \textit{absolute multiplicative height} $H: \bbP^n(\ol\Q) \to [1, \infty)$ is given by 
+        \[
+            H(P) = H_k(P)^{\frac{1}{[k : \Q]}},
+        \]
+        where $P \in \bbP(k)$ and choice of finite extension $k/\Q$ is arbitrary.
+        We similarly define the \textit{absolute logarithmic height} $h : \bbP^n(\ol\Q) \to [0, \infty)$ as $h(P) = \log H(P)$.
+    \end{definition}
+
+    Let's show that these height functions are well-defined irrespective of homogeneous coordinates or choice of field for our absolute heights.
+    First, we recount two important facts from Neukirch as well as Silverman and Hindry.
+
+    \begin{lemma}[Degree formula]
+        Let $k_2 / k_1$ be a finite extension of number fields.
+        We write $w | v$ for $w \in M_{k_2}$ to denote that $|\cdot|_w$ restricted to $k_1$ is the same as $|\cdot|_v$,
+        as well as denoting $k_{2, w}$ and $k_{1, v}$ as the completion of these fields with respect to the metrics induced by the respective absolute values.
+        Then for any absolute value $v \in M_{k_1}$ on the base field,
+        \[
+            \sum_{\substack{
+                w \in M_{k_2} \\
+                w | v
+            }} [k_{2, w} : k_{1, v}] = [k_2 : k_1].
+        \]
+    \end{lemma}
+
+    \begin{lemma}[Product formula]
+        Let $k/\Q$ be a finite field extension.
+        For any $x \in k^*$, we have
+        \[
+            \prod_{v \in M_k} \|x\|_v = 1.
+        \]
+    \end{lemma}
+
+    \begin{proof}
+        We note that this is clearly true for $k = \Q$ as each $p$-adic norm will divide out by the part of a rational lying over $p$.
+        To verify for a field extension $k/\Q$ with ring of integers $R_k$,
+        consider by the fact that $R_k$ is a Dedekind domain that for any $x \in k^*$,
+        \[
+            xR_k = \prod_{i = 1}^r P_i^{\ord_{P_i}(x)}.
+        \]
+        By taking norms, we find
+        \[
+            |N_{k/\Q}(x)| = N_{k / \Q}(xR_k) = \prod_{i = 1}^r N_{k / \Q}(P_i)^{\ord_{P_i}(x)}.
+        \]
+        Therefore, once we consider a particular prime $p \in \Z$,
+        as each $p$-adic norm corresponds to the primes lying over $p$,
+        we must have
+        \begin{align*}
+            |N_{k/\Q}(x)|_p 
+            & = \prod_{i = 1}^r |N_{k / \Q}(P_i)^{\ord_{P_i}(x)}|_p \\
+            & = \prod_{\substack{P \in \Spec(R_k) \\ x, p \in P}} N_{k / \Q}(P)^{-\ord_P(x)} \\
+            & = \prod_{\substack{v \in M_k \\ v | p}} \|x\|_v.
+        \end{align*}
+        This similarly holds for archimedean extensions of the usual absolute value on $\Q$ as well.
+        In the following calculation, 
+        note that the squaring of absolute values associated to complex embeddings can be accounted for as a product of the embedding and its conjugate,
+        and that the norm of an algebraic number of $\Q$ is often defined as the product of all embeddings.
+        Putting this together grants us
+        \[
+          \prod_{v | \infty} \|x\|_v 
+          = \prod_{\sigma : k \to \C} |\sigma(x)|_\infty
+          = |N_{k/\Q}(x)|_\infty.  
+        \]
+        With our identity true for all places $M_\Q$, we conclude
+        \begin{align*}
+            \prod_{v \in M_k} \|x\|_v
+            & =  \prod_{v_0 \in \Q} \prod_{\substack{v \in M_k \\ v | v_0}} \|x\|_v \\
+            & = \prod_{v_0 \in \Q} |N_{k/\Q}(x)|_{v_0} \\
+            & = 1.
+        \end{align*}
+    \end{proof}
+
+    Now, we may confirm that our height functions are well-defined.
+
+    \begin{proposition}
+        Fix a finite field extended $k/\Q$ and fix some point $P \in \bbP^n(k)$.
+        Then the height $H_k(P)$ is independent of choice of homogeneous coordinates.
+        Moreover, if $k'/ k$ is an additional finite extension,
+        then $H_{k'}(P) = H_k(P)^{[k' : k]}$ and hence our absolute height is well-defined.
+    \end{proposition}
+
+    \begin{proof}
+        We begin by verifying our first claim. 
+        Choose some coordinate $P = (a_0, \ldots, a_n)$ and consider some non-zero scalar $c \in k^*$.
+        Then, using our product formula,
+        \begin{align*}
+            \prod_{v \in M_k} \max \{\|ca_0\|_v, \ldots, \|ca_n\|_v\}
+            & = \prod_{v \in M_k} \|c\|_v \max\{\|a_0\|_v, \ldots, \|a_n\|_n\} \\
+            & = \left(
+                \prod_{v \in M_k} \|c\|_v
+            \right) \left(
+                \prod_{v \in M_k}\max \{\|a_0\|_v, \ldots, \|a_n\|_v\}
+            \right) \\
+            & = \prod_{v \in M_k}\max \{\|a_0\|_v, \ldots, \|a_n\|_v\}.
+        \end{align*}
+        Next, let's inspect $H_{k'}(P)$ given below as 
+        \[
+            H_{k'}(P) = \prod_{v \in M_{k'}} \max\{\|a_0\|_v, \ldots, \|a_n\|_v\}.
+        \]
+        With our degree formula in mind, 
+        let's break down this product by absolute values on $k'$ which lie over a particular absolute value on $k$,
+        \[
+            H_{k'}(P) = \prod_{v \in M_k} \prod_{\substack{ w \in M_{k'} \\ w | v}}
+            \max\{\|a_0\|_w, \ldots, \|a_n\|_w\}.
+        \]
+        To proceed, let's consider the cases of an archimedean or non-archimedean absolute value.
+        If $w \in M_{k'}$ extending $v \in M_k$ corresponds to some embedding $\sigma' : k' \to k'_w$,
+        then $v$ would correspond to $\sigma : k \to k_v$,
+        where $k'_w, k_v = \C$ or $\R$ and $k_v \subseteq k'_w$.
+        Hence, for any $x \in k$,
+        \[
+            \|x\|_w 
+            = |\sigma'(x)|^{[k'_w : \R]}
+            = |\sigma(x)|^{[k'_w : k_v] \cdot [k_v : \R]}
+            = \|x\|_v^{[k'_w : k_v]}.
+        \]
+        Next, let $P' \in \Spec(R_{k'})$ lie over $P \in \Spec(R_k)$.
+        Then, as we may view $R_k / P$ as a subfield of $R_{k'} / P'$,
+         we may calculate
+        \begin{align*}
+            N_{k' / \Q}(P')
+            & = |R_{k'} / P'| \\
+            & = |R_k / P|^{[R_{k'} / P'] : [R_k : P]} \\
+            & = N_{k / \Q}(P)^{[R_{k'} / P'] : [R_k : P]}.
+        \end{align*}
+    \end{proof}
+
+\end{document}

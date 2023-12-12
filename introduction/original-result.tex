@@ -1,0 +1,324 @@
+We begin this section by stating a special case of the Subspace Theorem,
+first introduced by Schmidt and generalized by Schlickewei to account for $p$-adic norms.
+While we will explore the $p$-adic norms later, 
+it is enough for now to note that for any prime $p \in \Z$ we obtain a norm
+$|x|_p$ for any $x \in \Q$ by uniquely writing $x = p^k \frac{a}{b}$ with $a, b, k \in \Z$ and $\gcd(a, p) = \gcd(b, p) = \gcd(a, b) = 1$ and taking
+\[
+    |x|_p = p^{-k}.
+\]
+It should also be clear by unique factorization that
+\[
+    |x| \cdot \prod_{p \text{ prime}} |x|_p = 1.
+\]
+We sometimes write $|x|_\infty = |x|$ as our usual absolute value and collect all of these absolute values together into a set of places $M_\Q$.
+It should be noted that the real application to algebraic numbers would require us to define similar absolute values on algebraic extensions of $\Q$,
+which we will explore later.
+We now recount a simplification the Subspace Theorem from \cite{Schlickewei_1977} as stated in \cite{BCZ_2002}.
+
+
+\begin{theorem}
+    Let $S \subseteq M_\Q$ be a finite set of places, 
+    with $\infty \in S$ as to include the usual absolute value,
+    and fix some integer $n \geq 1$.
+    For each $v \in S$, take $L_{1,v}, \ldots, L_{n, v} : \Q^n \to \Q$ to be linearly independent set of linear forms.
+    Fix some $\delta > 0$ and $C > 0$, 
+    and consider the inequality
+    \[
+        \prod_{v \in S}\prod_{i = 1}^n |L_{i,v}(x_1, \ldots, x_n)|_v < (\max_{1 \leq i \leq n} |x_i|)^{-\delta}.
+    \]
+    Then the integer solutions $(x_1, \ldots, x_n) \in \Z^n$ with $\gcd(x_1, \ldots, x_n) = 1$ to the above inequality lie in finitely many hyperplanes of $\Q^n$.
+\end{theorem}
+
+Let's now go over the proof of the main result from \cite{BCZ_2002}.
+
+\noindent\textit{Step 1: Setup}
+
+Let $a, b \in \Z$ be multiplicatively independent integers. 
+For each $n \geq 1$, we may take $D_n = \gcd(a^n - 1, b^n - 1)$,
+and write
+\[
+    d_n = \frac{a^n - 1}{D_n}, \qquad 
+    c_n = \frac{b^n - 1}{D_n}.
+\]
+With this, we clearly find for each $n \geq 1$
+\[
+    \frac{b^n - 1}{a^n - 1}
+    = \frac{c_n}{d_n}.
+\]
+
+Fixing some $\varepsilon > 0$,
+suppose for a contradiction that there is some infinite exceptional set $E$ for which $n \in E$ implies that $D_n \geq a^{\epsilon n}$.
+Equivalently, note that this implies that $d_n \leq a^{(1 - \varepsilon)n}$ for exceptional $n$,
+a fact that will be exploited by Diophantine approximation since our denominators will simply be too small for what we will ask of them. 
+
+To get this proof moving, 
+we will need some extra variables to allow for more flexibility in our approach.
+For each $n, j \geq 1$, we also write
+\[
+    c_{n,j} 
+    = d_n \cdot \frac{b^{jn} - 1}{a^n - 1}
+    = \frac{b^{jn} - 1}{D_n}
+    = \frac{b^n - 1}{D_n} \sum_{i = 0}^j b^{in}
+    = c_n \sum_{i = 0}^j b^{in}.
+\]
+For the sake of convenience, we will write $z_{n,j} = c_{n,j} / d_n$.
+
+\noindent\textit{Step 2: An initial bound}
+
+To lean us towards an approximation,
+we consider the series representation for each $n \geq 1$ as
+\[
+    \frac{1}{a^n - 1}
+    = \frac{1}{a^n} \cdot \frac{1}{1 - (1/a)^n}
+    = \frac{1}{a^n} \sum_{m = 0}^\infty \frac{1}{a^{mn}}
+    = \sum_{m = 1}^\infty \frac{1}{a^{mn}}
+\]
+We recall that for any $M \geq 1$,
+we have that the difference between the full series and the truncated series is
+\begin{align*}
+    \frac{1}{a^n - 1} - \sum_{m = 1}^M \frac{1}{a^{mn}}
+    & = \sum_{m > M} \frac{1}{a^{mn}} \\
+    & = \frac{1}{a^{nM}} \sum_{m = 1}^\infty \frac{1}{a^{mn}} \\
+    & = \frac{1}{a^{nM}(a^n - 1)} \\
+    & \ll \frac{1}{a^{n(M + 1)}}.
+\end{align*}
+Multiplying this difference by $(b^{jn} - 1)$ for a given $j \geq 1$, 
+we obtain an approximation for $z_{n,j}$ as
+\[
+    \left|
+        \frac{b^{jn} - 1}{a^n - 1}
+        - \sum_{m = 1}^M \frac{b^{jn} - 1}{a^{mn}}
+    \right|
+    = \left|
+        z_{n,j}
+        - \sum_{m = 1}^M \frac{b^{jn}}{a^{mn}}
+        + \sum_{m = 1}^M \frac{1}{a^{m n}}
+    \right|
+    \ll \frac{b^{jn}}{a^{n(M + 1)}}.
+\]
+
+\noindent\textit{Step 3: Trying Schmidt's Subspace Theorem}
+
+Moving towards the Subspace Theorem,
+notice that the previous approximation is a bound on a linear form in the variables $z_{n,j}$, $b^{jn}/a^{mn}$, and $1/a^{\ell n}$.
+Fixing a finite number $J$ to only consider finitely many $1 \leq j \leq J$,
+consider the space $\Q^N$ for $N = J + M + JM$ and coordinates
+\[
+    \Q^N = \{
+        (x_1, \ldots, x_N) = (
+            z_1, \ldots, z_J, 
+            u_1, \ldots, u_M,
+            v_{1,1}, \ldots, v_{J,M}
+        ) : 
+        z_j, u_m, v_{j,m}, x_i \in \Q
+    \}.
+\]
+For each $n \geq 1$, we consider the vector $\vec{x}_n \in \Z^N$ with coordinates
+\[
+    \vec{x}_n = d_n a^{Mn} (
+        z_{n,1}, \ldots, z_{n,J},
+        \tfrac{1}{a^n}, \ldots, \tfrac{1}{a^{Mn}},
+        \tfrac{b^n}{a^n}, \ldots, \tfrac{b^{nJ}}{a^{Mn}}
+    ),
+\]
+where precisely $z_j = z_{n,j}$, $u_m = 1/a^{mn}$, and $v_{j,m} = b^{jn}/a^{mn}$ for each $1 \leq j \leq J$ and $1 \leq m \leq M$.
+Note that the multiple of $d_n$ clears the denominators of the first group of coordinates,
+and the multiple of $a^{Mn}$ clears the denominators of the rest of the coordinates.
+
+We may now also consider linear form for each $1 \leq j \leq J$
+\[
+    L_{j, \infty}
+    = z_j 
+        + \sum_{m = 1}^M u_M
+        - \sum_{m = 1}^M v_{j,m},
+\]
+so that our bound form the previous step shows $|L_{j, \infty}(\vec{x}_n)|_\infty \ll d_n b^{jn} / a^{n}$ for any $n \geq 1$.
+Again towards the Subspace Theorem,
+it also follows that for any $n \geq 1$ we have
+\[
+    \prod_{1 \leq j \leq J}
+        |L_{j, \infty}(\vec{x}_n)|_\infty
+    \ll \frac{d_n^J b^{J^2n}}{a^{Jn}}.
+\]
+
+In order to apply our Subspace Theorem,
+note that we should have at least as many linear forms as the dimension of our input space.
+Just as in the case of Roth's Theorem as a special case,
+we will let the linear form $L_{i,\infty}$ for $i > J$ be given by $L_{i, \infty} = x_i$, 
+accounting for the magnitude of the terms approximating $z_{n,j}$.
+
+Clearly, all of our linear forms are linearly independent.
+But taking their product, we find for any $n \geq 1$ that
+\begin{align*}
+    \prod_{1 \leq i \leq N} |L_{j, \infty}(\vec{x}_n)|_\infty
+    & \ll \frac{d_n b^{J^2n}}{a^{Jn}}
+        \cdot \prod_{1 \leq m \leq M} |a^{n(M - m)}|
+        \cdot \prod_{\substack{
+            1 \leq m \leq M \\
+            1 \leq j \leq J
+        }} |b^{jn}a^{n(M - m)}| \\
+    & \ll \frac{d_n b^{J^2n}}{a^{Jn}}
+        \cdot a^{M^2n}
+        \cdot b^{J^2Mn}a^{JM^2n}
+    = d_n b^{J^2(M + 1)n}a^{J(M^2 - 1)n}.
+\end{align*}
+Unfortunately, adding these extra linear forms shows that our approximation is not exceptional with respect to how large our inputs are,
+even once we apply our bound to $d_n$.
+However, this is only one norm for which our bound is not exceptional,
+but we will see that there are norms on which our approximation is very good.
+
+\noindent\textit{Step 4: Applying Schlickewei's Subspace Theorem}
+
+With the previous shortcoming's in mind,
+let's consider the set of places $S \subseteq M_\Q$ containing the standard absolute value,
+but also containing the $p$-adic absolute values for each $p | ab$.
+For ease of notation, let's represent $S^0 \subseteq S$ as the set of places in $S$ corresponding to a $p$-adic norm.
+For each $1 \leq i \leq N$ and $v \in S^0$,
+we will take $L_{i, v} = x_i$, which is clearly a linearly independent set of linear forms.
+Recall that exponents of $a$ and $b$ are very small under the $p$-adic norms for $p | ab$,
+so this will allow us to balance out our product relative to $S$.
+
+Already, we may find that multiplying these linear forms balances out our product somewhat.
+Specifically, for $i > J$ and $n \geq 1$, 
+we find that $L_{i, v}(\vec{x}_n) = d_n a^{mn}b^{jn}$ for some $ 1 \leq m < M$ and $0 \leq j \leq J$ and so
+\begin{align*}
+    \prod_{v \in S} |L_{i, v}(\vec{x}_n)|_v
+    & = \prod_{v \in S} |d_n|_v \cdot |a^{mn}b^{jn}|_v \\
+    & = \left(
+            \prod_{v \in S} |d_n|_v
+        \right) \cdot
+        \left(
+            \prod_{v \in S} |a^{mn}b^{jn}|_v
+        \right) \\
+    & = |d_n| \left(
+        \prod_{p | ab} |d_n|_p
+        \right) \cdot
+        |a^{mn}b^{jn}|
+        \left(
+            \prod_{p | ab} |a^{mn}b^{jn}|_p
+    \right) \\
+    & \leq d_n.
+\end{align*}
+
+Accounting for our remaining linear forms, 
+for each $1 \leq j \leq J$, $v \in S^0$, and $n \geq 1$,
+we recall that $L_{j, v}(\vec{x}_n) = d_n z_{n, j} a^{Mn} = c_{n, j} a^{Mn}$,
+and so
+\[
+    \prod_{v \in S^0} |L_{j, v}(\vec{x})|_v
+    = \prod_{p | ab} |c_{n, j}|_p |a^{Mn}|_p
+    \leq \prod_{p | ab} |a^{Mn}|_p
+    = \frac{1}{a^{Mn}}.
+\]
+
+Putting each of these bounds of these products together, 
+we obtain that our full product for $x \in E$,
+where we may assume $d_n \leq a^{(1 - \varepsilon)n}$,
+is given by
+\begin{align*}
+    \prod_{v \in S} \prod_{1 \leq i \leq N} |L_{i, v}(\vec{x}_n)|_v
+    & = \prod_{1 \leq j \leq J} |L_{j, \infty}(\vec{x}_n)|_\infty
+    \cdot \prod_{1 \leq j \leq J} \prod_{v \in S^0} |L_{j, v}(\vec{x}_n)|_v
+    \cdot \prod_{J < i \leq N} \prod_{v \in S} |L_{i, v}(\vec{x}_n)|_v \\
+    & \ll \frac{d_n^J b^{J^2n}}{a^{Jn}}
+    \cdot \frac{1}{a^{JMn}}
+    \cdot d_n^{N - J} \\
+    & \ll \frac{d_n^Nb^{J^2n}}{a^{J(M + 1)n}} \\
+    & \ll \frac{a^{N(1 - \varepsilon)n}b^{J^2n}}{a^{(N - M)n}} \\
+    & \ll \left(
+            b^{J^2} a^{M - \varepsilon N}
+        \right)^n
+\end{align*}
+
+To keep simplifying, we are ready to fix choices of $M$ and $J$.
+Ideally, we would like to choose $J$ so that $M - \varepsilon N < J - M$,
+and then by choosing $M$ for which $a^M > 2b^{J^2}a^{J}$ gives
+\[
+    \left(
+        b^{J^2} a^{M - \varepsilon N}
+    \right)^n
+    < \left(
+        b^{J^2} a^{J - M}
+    \right)^n
+    < \frac{1}{2^n}.
+\]
+Fortunately, $J > \frac{2}{\varepsilon}$ will suffice since this gives
+\[
+    M - \varepsilon N
+    < M  + J - \varepsilon MJ
+    < M + J - 2M
+    = J - M.
+\]
+
+To obtain a bound in the form of the Subspace Theorem,
+as the coordinates of $\vec{x}_n$ are given as rational polynomials in $a^n$, $b^n$, and $d_n$ of degrees no more than $MJ + 1$,
+and $d_n \leq a^n$ is true for $n \in E$,
+there is some constant $C > 1$ for which $\max_{1 \leq i \leq N} |\vec{x}_n| < C^n$.
+Thus, by choosing $0 < \delta < \log 2 / \log C$
+we must have for all sufficiently large $n \in E$ that
+\[
+    \prod_{v \in S} \prod_{1 \leq i \leq N} |L_{i, v}(\vec{x}_n)|_v
+    < (\max_{1 \leq i \leq N} |\vec{x}_n|)^{-\delta}.
+\]
+
+
+\noindent\textit{Step 4: Too many integers, not enough hyperplanes}
+
+With the work of setting up the inequality from the Subspace Theorem completed,
+we may now reap the benefits of its conclusion.
+This means that the vectors $\vec{x}_n$ for $n \in E$ must lie in only finitely many hyperplanes of $\Q^N$.
+In particular, since $E$ is infinite,
+there exists some infinite subset $E'$ for which $\vec{x}_n$ all lie on some rational hyperplane $H$.
+
+To derive a contradiction,
+we may explicitly write out our hyperplane as the equation
+\[
+    \sum_{j = 1}^J \zeta_j z_j
+    + \sum_{m = 1}^J \alpha_1 u_1 
+    + \sum_{j = 1}^J \sum_{m = 1}^J \beta_{j, m} v_{j,m}
+    = 0,
+\]
+with $\zeta_k, \alpha_m, \beta_{j, m} \in \Q$ for $1 \leq j \leq J$ and $1 \leq m \leq M$.
+Writing $\beta_{0,m} = \alpha_m$ for each $1 \leq m \leq M$,
+notice that we have for any $n \in E'$,
+\[
+    \sum_{j = 1}^J \zeta_j \frac{b^{jn} - 1}{a^n - 1}
+    + \sum_{\substack{
+        0 \leq j \leq J \\
+        1 \leq m \leq M 
+    }} \beta_{j, m} \frac{b^{jn}}{a^{mn}}
+    = 0,
+\]
+which follows easily by the coordinates of $\vec{x}_n$ and dividing out by $d_n a^{Mn}$.
+That is, the integer polynomial
+\[
+    F(x, y) = x^M \sum_{j = 1}^J \zeta_j (y^j - 1)
+    + (x - 1) \sum_{\substack{
+        0 \leq j \leq J \\
+        0 \leq m < M 
+    }} \beta_{j, M - m} x^my^j
+\]
+has infinitely many roots along $\{(a^n, b^n) : n \in E'\}$.
+However, this must mean that $F(x, y) = 0$ since we'd otherwise find a finite set of coefficients $\alpha_{i,j} \in \Q$ for $1 \leq i, j \leq K$,
+such that for infinitely many $n \in E'$,
+\[
+    \sum_{1 \leq i, j, \leq K} \alpha_{i, j} a^{i n} b^{j n} = 0.
+\]
+Specifically, taking $1 \leq i_0, j_0 \leq k$ for which $\alpha{i_0,j_0} \neq 0$ and $a^{i_0}b^{j_0} > a^i b^j$ for any $i_0 \neq i, j_0 \neq j$ and $\alpha_{i,j} \neq 0$,
+which may be done since we are assuming $a^i \neq b^j$ for all $i, j \geq 1$,
+we find
+\[
+    \lim_{n \to \infty} \frac{1}{(a^{i_0}b^{j_0})^n} \sum_{1 \leq i, j, \leq K} \alpha_{i, j} a^{i n} b^{j n}
+    = \alpha_{i_0, j_0},
+\]
+contradicting the fact that we may always find some $n \in E'$ large enough for which the term is zero.
+
+Using the fact that $F(x, y) = 0$, and $\gcd(x^M, x - 1) = 1$,
+we must have 
+\[
+    (x - 1)| \sum_{j = 1}^J \zeta_j (y^j - 1),
+\]
+which is only possible if each coefficient is zero.
+Consequently, this must imply that $\beta_{j, M - m} = 0$ for each $0 \leq j \leq J$ and $0 \leq m < M$ as $(x - 1) \neq 0$.
+
+Finally, we have deduced a contradiction as our vectors $\vec{x}_n$ do not lie on the trivial hyperplane, granting us the desired result.

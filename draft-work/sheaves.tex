@@ -1,0 +1,240 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[margin=1 in]{geometry}
+\usepackage{rotating} %for \includegraphix[angle=270]
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{bbm}
+%\usepackage{amsmath,amssymb,epsfig,amscd,xy,amsthm}
+%\xyoption{all}
+%\usepackage[active]{srcltx}
+%\CompileMatrices
+\usepackage{enumerate}
+\usepackage{extarrows}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{float}
+\usepackage{tikz-cd}
+
+\usepackage{setspace} \doublespacing
+
+\usepackage{user-commands}
+\usepackage{theorem-commands}
+
+\begin{document}
+
+We begin this section with the basic building block we will use for endowing the various geometrical spaces we will encounter with various rings of locally defined functions.
+
+\begin{definition}[Presheaf]
+    A \textit{presheaf} $\cF$ on a topological space $X$ is mapping on the open sets $U \mapsto \cF(U)$, 
+    where the sets $\cF(U)$ may either be groups, rings, modules, or other categories.
+    Importantly, if given a containment of open sets $V \subseteq U$, 
+    there exists a restriction morphism $\rho_{V \to U}: \cF(V) \to \cF(U)$.
+    As well, these groups (rings, modules, etc.) and restriction morphisms must satisfy:
+    \begin{enumerate}
+        \item $\cF(\emptyset)$ is trivial,
+        \item $\rho_{U \to U}$ is the identity on $\cF(U)$, and
+        \item  Given the containment of open sets $W \subseteq V \subseteq U$, the restriction morphism from $W$ to $U$ is the composition of the other two restriction morphisms, captured by the diagram below.
+        \[
+            \begin{tikzcd}
+                \cF(W) \arrow[d, "\rho_{W \to V}"] \arrow[dr, "\rho_{W \to U}", bend left] \\
+                \cF(V) \arrow[r, "\rho_{V \to U}"] & \cF(U)
+            \end{tikzcd}
+        \]
+    \end{enumerate}
+\end{definition}
+
+Some other notation we will encounter when dealing with presheaves is that the elements of each local group may be referred to as $\textit{sections}$
+and we may alternatively use the notation $\Gamma(U, \cF)$ opposed to $\cF(U)$.
+Also, with the idea of functions in mind, given a section $s \in \Gamma(U, \cF)$ and a containment of open sets $V \subseteq U \subseteq X$,
+we will almost always prefer to write $s|_V$ opposed to $\rho_{U \to V}(s)$ for the restriction of $s$.
+
+Alongside this, we also want to consider maps between presheaves which, in some sense, respect the underlying algebra.
+
+\begin{definition}[Presheaf map]
+    Given two sheaves $\cF$ and $\cG$ on a space $X$, 
+    we may define a \textit{map of presheaves} $\varphi : \cF \to \cG$ as a homomorphism $\varphi(U) : \cF(U) \to \cG(U)$ on each open set $U$ which commutes with the restriction maps.
+    This relationship is demonstrated with the diagram below for open sets $V \subseteq U \subseteq X$.
+    \[
+        \begin{tikzcd}
+            \cF(U) \arrow[r, "\varphi(U)"] \arrow[d, "\rho_{\cF, U \to V}"] & \cG(U) \arrow[d, "\rho_{\cG, U \to V}"] \\
+            \cF(V) \arrow[r, "\varphi(V)"] & \cG(V)
+        \end{tikzcd}
+    \]
+\end{definition}
+
+Composition of sheaf maps is given in the straightforward manner by composition on each underlying homomorphism.
+Such a mapping is considered an isomorphism when each homomorphism is itself an isomorphism.
+Also, when it is clear which open set a given section $s \in \cF(U)$ belongs to, 
+we may elect to write $\varphi(s)$ instead of the much more verbose $\varphi(U)(s)$.
+
+While a presheaf satisfies the job of attaching local data to the various open subsets of our space,
+it doesn't have strong enough requirements to glue sections together or guarantee uniqueness.
+
+\begin{definition}[Sheaf]
+    A \textit{sheaf} $\cF$ on a topological space $X$ is a presheaf which has certain local properties which mimic the usual notions of functions defined in an open neighbourhood. Specifically, these extra conditions are given as follows.
+    \begin{enumerate}
+        \item Given an open cover $\cup_{i \in I} U_i$ of some open subset $U \subseteq X$, 
+        if a section $s \in \cF(U)$ satisfies $s|_{U_i} = 0 \in \cF(U_i)$, then $s = 0$. 
+        That is, we may conclude that the local properties of each section uniquely determine the global properties.
+        \item Given an open cover $\cup_{i \in I} U_i$ of some open subset $U \subseteq X$, 
+        and some sections $s_i \in \cF(U_i)$ for which $s_i|_{U_i \cap U_j} = s_j|_{U_i \cap U_j}$ for any $i, j \in I$, 
+        then there exists some section $s \in \cF(U)$ such that $s_i = s|_{U_i}$.
+        That is, given some sections defined on an open cover which agree on overlaps, we may always extend this to construct a section on the broader open subset.
+    \end{enumerate}
+\end{definition}
+
+One more key concept to keep in mind with a sheaf is the idea of the stalk.
+This is a set of local data to a particular point which is obtained by considering the sections on all open neighbourhoods of our point.
+
+\begin{definition}[Stalk]
+    Let $P \in X$ be some point and $\cF$ a presheaf. 
+    We define the \textit{stalk} $\cF_P$ at the point $P$ by equivalence classes $\langle U, s \rangle$,
+    with $U \subseteq X$ open containing $P$ and $s \in \cF(U)$.
+    Two pairs $\langle U, s \rangle$ and $\langle V, t \rangle$ are said to be equivalent when there exists some open subset $W \subseteq U \cap V$ such that $s|_W = t|_W$.
+\end{definition}
+
+Stalks are very useful tools since for a map of sheaves $\varphi : \cF \to \cG$ on a space $X$,
+we get an associated map of stalks $\varphi_P : \cF_P \to \cG_P$.
+With the associated maps, we find that $\varphi$ is an isomorphism if and only if $\varphi_P$ is an isomorphism for each $P \in X$.
+We will also say a sheaf morphism is injective (surjective) precisely when the associated map on the stalks is injective (surjective) for all $P \in X$.
+Note that our injectivity condition is equivalent to each map of sections being injective,
+but our surjectivity condition is not equivalent to each map of sections being surjective.
+
+The power of sheaves is demonstrated with the following useful lemma.
+Note that sheaf restriction to an open set is done so in the obvious way.
+
+\begin{lemma}[Gluing sheaves]
+    Consider an open cover $X = \cup_{i \in I} U_i$, with sheaves $\cF_i$ on $U_i$ for each $i \in I$.
+    Suppose for each $i, j \in I$ there exists a sheaf isomorphism $\varphi_{i j} : \cF_i|_{U_i \cap U_j} \to \cF_j|_{U_i \cap U_j}$ which behaves nicely in the following ways for any indices $i, j, k \in I$: 
+    \begin{enumerate}
+        \item $\varphi_{i i}$ is the identity sheaf map.
+        \item $\varphi_{i k} = \varphi_{j k} \circ \varphi_{i j}$ on the intersection $U_i \cap U_j \cap U_k$.
+    \end{enumerate}
+    Then there exists a sheaf $\cF$ on $X$ such that $\cF_i = \cF|_{U_i}$.
+\end{lemma}
+
+\begin{proof}
+    % Cite supervisor?
+    We may in-fact show the sheaf in question directly.
+    Given an open set $U \subseteq X$, we may define the sections as
+    \[
+        \cF(U) = \{ 
+            (s_i)_{i \in I} \in \prod_{i \in I} \cF_i(U_i \cap U): 
+            \varphi_{i, j}(s_i|_{U_i \cap U_j \cap U}) = s_j|_{U_i \cap U_j \cap U} \forall i, j \in i
+        \},
+    \]
+    where the operations are done component wise.
+    Clearly, by defining the restriction maps componentwise,
+    we have a presheaf, so it remains is to validate the sheaf axioms.
+
+    Starting with our uniqueness axiom, let $V \subseteq X$ be arbitrary with open cover $V = \cup_{j \in J} V_j$.
+    Suppose for some $s \in \cF(V)$ that $s|_{V_j} = 0$ for each $j \in J$.
+    To show that $s = (s_i)_{i \in I}= 0$, we notice that it suffices to show that each component of $s$ is zero.
+    For this, we recall that for each $i \in I$, that $U_i$ and $\cF_i$ form a sheaf and $U_i \cap V = \cup_{j \in J} U_i \cap V_j$ is an open cover.
+    Thus, since $s|_{V_j} = 0$ for each $j \in J$, we find $s_i|_{U_i \cap V_j} = 0$ and so $s_i = 0$ by our sheaf axiom.
+    Therefore, it must be that $s = 0$ as well.
+
+    Next, similarly take $V \subseteq X$ open with the same open cover as before. 
+    Suppose now that we are given some sections $s^{(j)} = (s^{(j)}_i)_{i \in I} \in \cF(V_j)$ for which $s^{(j)}|_{V_j \cap V_{j'}} = s^{(j')}|_{V_j \cap V_{j'}}$ for all $j, j' \in J$.
+    As before, we wish to use our sheaf axioms to determine for each $i \in I$ some $s_i \in \cF_i(U_i \cap V)$ so that for all $j \in J$,
+    \[
+        (s_i)_{i \in I}|_{V_j} = s^{(j)}
+        \iff s_i|_{U_i \cap V_j} = s^{(j)}_i.
+    \]
+    As before, fixing $i \in I$, note that $\bigcup_{j \in J} U_i \cap V_j$ is an open cover of $U_i \cap V$.
+    Thus, since for each $j, j' \in J$ we have $s^{(j)}|_{V_j \cap V_{j'}} = s^{(j')}|_{V_j \cap V_{j'}}$, we must then have
+    \[
+        s^{(j)}_i|_{U_i \cap V_j \cap V_{{j'}}}
+        = s_i^{(j')}|_{U_i \cap V_j \cap V_{{j'}}}.
+    \]
+    Therefore, it follows that there exists some section $s_i \in \cF(U_i \cap V)$ such that $s_i|_{U_i \cap V_j} = s^{(j)}_i$.
+    Lastly, we also remark that for each $i, k \in I$ that $\varphi_{ik}(s_i|_{U_i \cap U_k \cap V}) = s_k|_{U_i \cap U_k \cap V})$.
+    This is since $\cup_{j \in J} V_j \cap U_i \cap U_k$ is an open cover and we have on each restriction $V_j \cap U_i \cap U_k$ that
+    \begin{align*}
+        \varphi_{ik}(s_i|_{U_i \cap U_k \cap V})|_{V_j \cap U_i \cap U_k}
+        & = \varphi_{ik}(s^{(j)}_i|_{U_i \cap U_k \cap V_j}) \\
+        & = s^{(j)}_k|_{U_i \cap U_k \cap V_j} \\
+        & =(s_k|_{U_i \cap U_k \cap V})|_{V_j \cap U_i \cap U_k}.
+    \end{align*}
+
+    Finally, we also briefly mention why $\cF_i \cong \cF|_{U_i}$ for any particular $i \in I$.
+    The isomorphism from $\cF|_{U_i}$ to $\cF_i$ is given by projection onto the corresponding coordinate.
+    The mapping is clearly injective by the fact that the other components are given by isomorphisms on intersections. 
+    Also, the mapping is surjective since given $U \subseteq U_i$, if $s_i \in \cF_i(U)$, then we can consider
+    \[
+        (\varphi_{ik}(s_i|_{U \cap U_k}))_{k \in I} \in \cF|_{U_i}(U),
+    \]
+    which clearly projects onto our given section.
+    \qedhere
+    
+\end{proof}
+
+While this clearly demonstrates the utility of the sheaf axioms, 
+we are often left with only a presheaf.
+However, we may in-fact uniquely extend any given presheaf to a sheaf by examining the stalks.
+
+\begin{theorem}[Sheaf associated to a presheaf]
+    Let $\cF$ be a presheaf on a topological space $X$.
+    There exists a sheaf $\cF^+$ and map $\theta : \cF \to \cF^+$, 
+    unique up to isomorphism, such that $\cF_P \cong \cF^+_P$ for any $P \in X$.
+    Moreover, we have the following universal property. 
+    
+    Given a sheaf $\cG$ and a map $\varphi : \cF \to \cG$, 
+    there exists a unique morphism of sheaves $\psi : \cF^+ \to \cG$ such that the following diagram commutes.
+    \[
+        \begin{tikzcd}
+            \cF \arrow[r, "\varphi"] \arrow[d, "\theta"] & \cG \\
+            \cF^+ \arrow[ur, "\psi"]
+        \end{tikzcd}
+    \]
+\end{theorem}
+
+One way to view our associated sheaf is to define it as the gluing of sections from $\cF$.
+In fact, we may verify that if we set 
+\[
+    \cF^+(U) = \{\{(U_i, s_i)\}_{i \in I} : 
+        U = \cup_{i \in I} U_i, 
+        s_i \in \cF(U_i), 
+        s_i|_{U_i \cap U_j} = s_j|_{U_i \cap U_j}
+    \},
+\]
+with $\theta : \cF \to \cF^+$ given by $\theta(s) = \{(U, s)\}$ for any open $U \subseteq X$.
+There is also an implicit equivalence relationship when two sets of pairs agree on all mutual overlaps.
+Note that restriction is done pairwise and we may simply discard any empty restrictions,
+while our algebra is done on intersection pairs between the two open covers.
+We also define our stalks to be given by taking any of the open set and section pairs.
+As they agree on overlaps, this is well-defined. 
+
+
+If we have a morphism $\varphi : \cF \to \cG$ with $\cG$ a sheaf on $X$,
+then clearly we must have $\psi : \cF^+ \to \cG$ given by
+\[
+    \psi(\{(U_i, s_i)\}_{i \in I})|_{U_i} = \psi(\{(U_i, s_i)\}) = (\psi \circ \theta)(s_i) = \varphi(s_i).
+\]
+This definition makes sense as $\cG$ is a sheaf,
+and so there must exist some $t \in \cG(U)$ such that $t|_{U_i} = \varphi(s_i)$ as each $\varphi(s_i)$ necessarily agree on overlap.
+
+Note that with the sheaf morphism $\psi : \cF^+ \to \cG$, we have satisfied the universal property and is hence isomorphic to the claimed sheaf.
+We also note that it is clear that the stalks are isomorphic.
+
+For one last important aspect of sheaves which we will make use of,
+consider two topological spaces $X$ and $Y$ with sheaves $\cF$ and $\cG$ respectively.
+Given a continuous map $f : X \to Y$, 
+we are able to consider how $\cF$ may act as a sheaf on $Y$ and likewise for $\cG$ on $X$.
+
+We consider the \textit{pushforward} $f_*\cF$ on $Y$ as for each $U \subseteq Y$, $(f_*\cF)(U) = \cF(f^{-1}(U))$.
+Likewise, we are able to consider the \textit{inverse image shead} $f^{-1}\cG$ on $X$ by equivalence classes of ordered pairs given below
+\[
+    (f^{-1}\cG)(U) = \{ (V, s) : f(U) \subseteq V, s \in \cG(V) \}
+     \big / \sim
+\]
+with $(V, s) \sim (W, t)$ whenever there exists some open neighbourhood $O \subseteq V \cap W$ also containing $f(U)$ for which $s|_O = t|_O$.
+\end{document}
+
+% Missing definitions
+% - ring localiztion
+% - algebraically closed
+% - Noetherian ring
+

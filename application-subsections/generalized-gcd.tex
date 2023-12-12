@@ -1,0 +1,204 @@
+With our toolkit in place, let's now dive into some generalizations of the GCD.
+Consider two integers $a, b \in \Z$.
+We recall that
+\[
+    \gcd(a, b) = \prod_{p \text{ prime}} p^{\min\{\ord_p(a), \ord_p(b)\}}.
+\]
+Re-arranging the above expression, and recalling some notation from the section on local heights, we have
+\[
+    \log \gcd(a, b) = \sum_{v \in M_\Q^0} \min\{v^+(a), v^+(b)\}.
+\]
+Notice as well that for the usual archimedean absolute value on $\Q$ that for $x \in \Z$
+\[
+    v_\infty^+(x) = \max(-\log |x|_v, 0) = 0,
+\]
+so our sum may as well be over all places of $M_\Q$.
+
+This strongly suggests that the GCD could be generalized by considering the minus logarithm of the $v$-adic distance to $(0, 0)$
+(abusing notation for an affine piece of $\bbP^1$),
+using the tools of local heights.
+However, we run into the immediate pitfall that if we are considering $(a, b) \in (\bbP^1 \times \bbP^1)(\Q)$,
+then $(0, 0)$ is of co-dimension 2 and not a divisor.
+
+Fortunately, the situation can still be recovered and generalized easily.
+The key idea is that blowing up $\bbP^1 \times \bbP^1$ at the point $(0, 0)$ yields an exceptional divisor,
+which we can use for constructing local heights.
+
+\begin{definition}[Generalized GCD]
+    Suppose $X/k$ is a smooth variety, with a closed subvariety $Y$ of co-dimension at least 2.
+    Let $\pi : \wt X \to X$ be the blowup of $X$ along $Y$, 
+    and take $E = \pi^{-1}(Y)$ to be the exceptional divisor.
+    We may then define the \textit{generalized logarithmic greatest common divisor} for a point $P \in (X \sm Y)(k)$ as
+    \[
+        h_{\gcd, Y}(P) = h_{\wt X, E}(\pi^{-1}(P)).
+    \]
+\end{definition}
+
+Let's re-examine our motivating example to see how this definition plays out.
+Consider the following special case of Lemma 2.5.2 of \cite{Vojta_2006}.
+
+\begin{lemma}
+    Let $X/k$ be a non-singular variety of dimension at least 2 and consider a closed point $Y \in X(\ol{k})$.
+    Suppose as well that $Y$ is given as the intersection of finitely many effective divisors $\{D_i\}_{i = 1}^m$ in the sense that $\cI_P \cong \sum_{i = 1}^m \cL(-D_i)$.
+    If $\pi : \wt X \to X$ is the blowing up of $X$ with respect to $Y$ with exceptional divisor $E = \pi^{-1}(Y)$,
+    then the local Weil height for any $P \in X \sm Y$ with respect to the divisor $E$ and place $v \in M_k$ is given by
+    \[
+        \lambda_{E, v}(\pi^{-1}(P)) = \min\{\lambda_{D_i, v}(P)\}_{i = 1}^m.
+    \]
+\end{lemma}
+
+\begin{proof}
+This is rather intuitive that the $v$-adic distance to the exceptional divisor could be determined by determining the $v$-adic distance to the closest divisor containing $Y$ on $X$.
+For this, note that $\pi^* D_i = \wt D_i + E$ with $\cap_{i = 1}^m \wt D_i = \emptyset$, 
+where $\wt D_i$ is the strict transform of the closed subvariety associated to $D_i$. 
+Hence, for any $P \in X \sm Y$ and $v \in M_k$,
+\[
+    \lambda_E,v(\pi^{-1}(P))
+        = \min_{1 \leq i \leq m} \lambda_{\pi^* D}(\pi^{-1}(P))
+        = \min_{1 \leq i \leq m} \lambda_{D, v}(P).
+\]
+    
+\end{proof}
+
+We also require one more tool to assist in computation on products of curves.
+
+\begin{lemma}
+    Let $X$ and $Y$ be curves over an algebraically closed field $k$.
+    Let $Z = X \times_k Y$ be the product surface with projections $p_1 : Z \to X$ and $p_2 : Z \to Y$.
+    If $p_1(R) = P$ and $p_2(R) = Q$ for closed points $P \in X$, $Q \in Y$, and $R \in Z$,
+    then the ideal sheaf associated to $R$ on $Z$ is isomorphic to $\cL(-p_1^*P) + \cL(-p_2^*Q)$,
+    where $P$ and $Q$ are effective Cartier divisors.
+\end{lemma}
+
+\begin{proof}
+    For this, we can work locally and assume that $U = \Spec(A) \subseteq X$, $V = \Spec(B) \subseteq Y$, 
+    $P$ is the zero of some $f \in A$ locally, and $Q$ is the zero of some $g \in B$ locally.
+    For ease of variables, we identify each closed point with the associated maximal ideal.
+    As our open neighbourhood of $R$ is $U \times V = \Spec(A \otimes_k B)$,
+    we will determine $R$ as associated to some maximal ideal $A \otimes B$.
+    As $p_1(R) = P$, it should be noted that $R$ contains $f \otimes 1$,
+    and likewise that $R$ contains $1 \otimes g$.
+    
+    However, we may stop here as for any pure element $a \otimes b \in A \otimes B$,
+    we can determine some $u \in A$ and $v \in B$ for which $au - 1 \in fA$ and $bv -1 \in gB$,
+    allowing us to write
+    \[
+        (a \otimes b) \cdot (u \otimes v)
+        = au \otimes bv
+        = (1 + As) \otimes (1 + gB)
+        = 1 \otimes 1 + 1 \otimes gB + fA \otimes 1 + fA \otimes gB.
+    \]
+    As the sets on the right are contained in $\langle f \otimes 1, 1 \otimes g \rangle$ by closure,
+    we see that $A \otimes B / (f \otimes 1, 1 \otimes g)$ is a field.
+    Consequently, $\langle f \otimes 1, 1 \otimes g \rangle$ is maximal and thus all of $R$.
+
+    With this description, let's now consider what $p_1^*P$ and $p_2^*Q$ are as ideals of $A \otimes_k B$.
+    Fortunately, as these are principal subschemes,
+    we may simply note that they are the vanishing of $f \circ p_1 = f \otimes 1$ and $g \circ p_2 = 1 \otimes g$.
+    Therefore, we obtain that $R = p_1^*P + p_2^*Q$.
+    Moreover, since we may cover $X$, $Y$, and $Z$ with patches in this way and the construction agrees on overlaps,
+    it must be the case that $\cI_R \cong \cL(-p_1^*P) + \cL(-p_2^*Q)$.
+\end{proof}
+
+Let's go over some examples, ignoring error terms which may be taken as zero by choice of local height functions.
+
+\begin{example}
+    Consider the point $Y = ((0: 1), (0: 1))$ in $X = \bbP^1 \times \bbP^1$.
+    Let $\pi : \wt X \to X$ be the blowing up of $X$ along our point $Y$ with exceptional divisor $E$. 
+    Let's also denote $p_1, p_2: X \to \bbP^1$ to be our projection maps from our product.
+    From our previous lemmas, we may determine that for any place $v \in M_\Q$,
+    we have for any closed point $(a, b) \in (X \sm Y)(\Q)$ that
+    \begin{align*}
+        \lambda_{E, v}(\pi^{-1}(a, b)) 
+        & = \min(\lambda_{p_1^*(0: 1), v}(a, b), \lambda_{p_2^*(0: 1), v}(a, b)) \\
+        & = \min(\lambda_{(0: 1), v}(a), \lambda_{(0: 1), v}(b)) \\
+        & = \min(v^+(a), v^+(b)).
+    \end{align*}
+    Therefore, using our local to global property, we find that
+    \[
+        h_{\gcd}((a, b); Y) 
+        = \sum_{v \in M_\Q} \min(v^+(a), v^+(b))
+        = \log \gcd(a, b),
+    \]
+    exactly as desired.
+\end{example}
+
+\begin{example}
+    Take some $f_1, \ldots, f_m \in \Z[x_0, \ldots, x_n]$ to simultaneously vanish at a smooth subvariety $V \subseteq \bbP^n$ of co-dimension at least 2.
+    We will aim to determine $h_{\gcd}(P; V)$ for a given $P = (a_0 : \cdots : a_n) \in (\bbP^n \sm V)(\Q)$,
+    where we are assuming that the coordinates have been chosen to be coprime integers.
+    As before, we may write $V = \cap_{1 \leq i \leq m} \{ f_i = 0 \}$,
+    and so we find with the full generality of Lemma 2.5.2 from \cite{Vojta_2006} that $h_{\gcd}(P; Q)$ is given by a local height function, 
+    for each $v \in M_\Q$, as $\min_{1 \leq i \leq m}\lambda_{\{f_ i = 0\}, v}(P)$.
+    
+    To analyze these local heights,
+    note that for any $v \in M_{\Q}$ and $1 \leq i \leq m$ we have
+    \[
+        \lambda_{\{f_i = 0\}, v}(P) 
+            = \log \max_{0 \leq j \leq n} \left| \frac{a_j^{d_i}}{f_i(P)} \right|_v
+            = d_i \log \max_{0 \leq j \leq n} |a_j|_v - \log |f_i(P)|_v,
+    \]
+    where $d_i = \deg(f_i)$.
+    To simplify this calculation, we find for any rational prime $p \in \Z$,
+    $\max_{0 \leq j \leq n} |a_j|_p = 1$ by our coprime assumption and so $\lambda_{\{f_i = 0\}, p}(P) = -\log |f_i(P)|_p$.
+
+    Applying our local to global principle and summing over all places $M_\Q$,
+    and performing some rearrangements on our local height functions,
+    we may now see that
+    \[
+        h_{\gcd}(P; V) = \log \left(\min_{1 \leq i \leq m} \frac{(\max_{0 \leq j \leq m} |a_j|)^{d_i}}{|f_i(P)|}\right)
+        - \log \left(
+            \prod_{p \in M_\Q^0}  \max_{1 \leq i \leq m} |f_i(P)|_p
+        \right).
+    \]
+    Clearly, the product on the right is simply $\gcd(f_1(P), \ldots, f_m(P))^{-1}$.
+    Referring to Example 4 of \cite{Silverman_2004},
+    we may then write $h_{\gcd}(P; V) = \log \gcd(f_1(P), \ldots, f_m(P)) + O(1)$.
+\end{example}
+
+\begin{notation}
+    Let $C / \Q$ be an elliptic curve, with rational point $P = (x_P, y_P) \in C(\Q)$.
+    We may then write $x_P$ as $A_P / D_P^2$, with $\gcd(A_P, D_P) = 1$ and $D_P > 0$.
+\end{notation}
+
+\begin{example}
+    Consider an elliptic curve $C/k$ with identity $O \in C$.
+    Assume without loss of generality $C$ is given in $\bbP^2$ as the curve $y^2z = x^3 + Axz^2 + Bz^3$,
+    with $4A^3 + 27B^2 \neq 0$, and our identity point is the intersection with $z = 0$ at $(0 : 1 : 0)$.
+    To examine $O \in C$ as an effective Cartier divisor,
+    let's specialize to the affine subspace $y = 1$ on $D_+(y)$ with coordinates $u = x/y$ and $v = z/y$.
+    Therefore, we are equivalently looking for the vanishing $(0, 0) \in \Spec(k[u,v]/\langle u^3 + Auv^2 + Bv^3 - v \rangle)$.
+
+    The maximal ideal associated to $(0, 0)$ is simply $\langle u, v \rangle$.
+    Writing in our function field
+    \[
+    v = u \frac{u^2 + Av^2}{Bv^2 - 1},
+    \]
+    since $Bv^2 - 1$ does not vanish at $(0, 0)$,
+    we find that $u$ is an uniformizer for the unique maximal ideal of our local ring.
+    Therefore, $u$ vanishes to order 1, and we may similarly show (as expected) that $v$ vanishes to order 3.
+    
+    With this, on the affine subspace we are interested in of $z = 1$,
+    we see that the function $\frac{z}{x} = x^{-1}$ vanishes to order 2 at $O$ and $2O = \rmDiv(x^{-1})$.
+    Using the additivity of our local height functions, 
+    for any $v \in M_\Q$ and $P \in C(\Q)$,
+    \[
+        \lambda_{O, v}(P) = \frac{1}{2} v^+(x_P^{-1}) = v(D_P).
+    \]
+
+    Now, with this calculation and our lemma for heights on blowups,
+    we may show that for any $P, Q \in C(\Q)$ not the identity and $v \in M_\Q$ that
+    \begin{align*}
+        \lambda_{E, v}(\pi^{-1}(P, Q))
+        & = \min(\lambda_{p_1^*O, v}(P, Q), \lambda_{p_2^*O, v}(P, Q)) \\
+        & = \min(\lambda_{O, v}(P), \lambda_{O,v}(Q)) \\
+        & = \min(v(D_P), v(D_Q)),
+    \end{align*}
+    where $\pi : \wt X \to C \times C$ is the blowup along $(O, O)$ with exceptional divisor $E = \pi^{-1}(O, O)$.
+    Combined with our local to global principal, we may state that
+    \begin{align*}
+        h_{\gcd}((P, Q); (O, O)) 
+        = \sum_{v \in M_\Q} \min(v(D_P), v(D_Q))
+        = \log \gcd (D_P, D_Q).
+    \end{align*}
+\end{example}

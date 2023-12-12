@@ -1,0 +1,200 @@
+\documentclass[12pt, leqno]{article}
+\usepackage{verbatim}
+\usepackage[margin=1 in]{geometry}
+\usepackage{rotating} %for \let\clearpage\relax\includegraphix[angle=270]
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{bbm}
+%\usepackage{amsmath,amssymb,epsfig,amscd,xy,amsthm}
+%\xyoption{all}
+%\usepackage[active]{srcltx}
+%\CompileMatrices
+\usepackage{enumerate}
+\usepackage{extarrows}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{float}\usepackage{tikz-cd}
+
+\usepackage{setspace} \doublespacing
+
+\renewcommand{\contentsname}{Table of Contents}
+
+\usepackage[
+    backend=biber,
+    style=alphabetic,
+]{biblatex}
+\addbibresource{refs.bib}
+
+\usepackage{user-commands}
+\usepackage{theorem-commands}
+
+\begin{document}
+% Title page and title -------------------------------------------------------------------
+\begin{titlepage}
+\begin{center}
+
+\vspace*{4cm}
+\large
+\title{Generalized GCDs as Applications of Vojta's Conjecture}
+Generalized GCDs as Applications of Vojta's Conjecture
+
+\normalsize
+by
+
+Nolan Robert Pyott
+
+\vfill
+
+A thesis
+
+presented to the University of Waterloo
+
+in fulfillment of the
+
+thesis requirement for the degree of
+
+Master of Mathematics
+
+in
+
+Pure Mathematics
+
+\vfill
+
+Waterloo, Ontario, Canada, 2023
+
+\copyright\ Nolan Robert Pyott 2023
+
+\vspace*{2cm}
+
+\end{center}
+\end{titlepage}
+
+\newpage
+
+\pagenumbering{roman}
+\setcounter{page}{2}
+
+\begin{center}
+    \textbf{Author's Declaration}
+\end{center}
+
+
+I hereby declare that I am the sole author of this thesis. This is a true copy of
+the thesis, including any required final revisions, as accepted by my examiners.
+
+I understand that my thesis may be made electronically available to the public.
+
+\newpage
+
+% Start of preamble -----------------------------------------------------------
+\begin{abstract}
+Starting with an analysis of the result that for any coprime integers $a$ and $b$,
+and some $\varepsilon > 0$,
+we have eventually that $\gcd(a^n - 1, b^n - 1) < a^{\varepsilon n}$ holds for all $n$,
+we are motivated to look for geometric reasons why this should hold.
+After some discussion on the general geometry and arithmetic needed to examine these questions,
+we take a quick look into how Vojta's conjectures provide a generalization of our first result.
+In particular, we also note a case where this implies a similar equality on particular elliptic curves.
+\end{abstract}
+
+\newpage
+\begin{center}
+    \textbf{Acknowledgments}
+\end{center}
+
+First and foremost, I would like to thank my supervisor Professor David McKinnon for his essential guidance on this thesis.
+He enlightened my mathematical perspective on these topics considerably over many meetings and was always someone I knew could be relied upon. 
+I'd also like to add a special thanks to my readers, 
+Professors Jason Bell and Matthew Satriano,
+for their comments and suggestions,
+as well as bringing up interesting perspectives regarding this project.
+I'm very grateful as well for the support from coordinators Nancy Maloney and Jo-Ann Hardy in their assistance and information which helped me complete this milestone.
+I also extend my gratitude to the various staff and students who have helped me along my journey and cultivating my interest in research mathematics.
+On my list as well, I thank my colleagues at PostGrid for their understanding and accommodations as I worked to complete this thesis while continuing work.
+Lastly, I want to thank my girlfriend Angela for all of her emotional support throughout and helping to maintain our household when times were busy and sleep was short.
+
+
+
+\newpage
+\tableofcontents
+\setcounter{page}{5}
+
+% Start of content ------------------------------------------------------------
+
+\newpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\section{Introduction}
+
+\subsection{Overview}
+\let\clearpage\relax\include{introduction/overview}
+
+\subsection{An Initial Result}
+\let\clearpage\relax\include{introduction/original-result}
+
+\newpage
+\section{Geometry}
+
+\subsection{Sheaves}
+\let\clearpage\relax\include{geometry-subsections/sheaves}
+
+\subsection{Affine Schemes}
+\let\clearpage\relax\include{geometry-subsections/affine-schemes}
+
+\subsection{Schemes and Properties}
+\let\clearpage\relax\include{geometry-subsections/schemes-and-properties}
+
+\subsection{Divisors and Sheaves of Modules}
+\let\clearpage\relax\include{geometry-subsections/divisors}
+
+\subsection{Blowups}
+\let\clearpage\relax\include{geometry-subsections/blowups}
+
+\subsection{Canonical Divisor Class}
+\let\clearpage\relax\include{geometry-subsections/canonical-divisor}
+
+\subsection{Elliptic Curves}
+\let\clearpage\relax\include{geometry-subsections/elliptic-curves}
+
+\newpage
+\section{Height Functions}
+
+\subsection{Projective Height Functions}
+\let\clearpage\relax\include{height-subsections/projective-heights}
+
+\subsection{Weil's Height Machine}
+\let\clearpage\relax\include{height-subsections/weil-heights}
+
+\subsection{Local Height Functions}
+\let\clearpage\relax\include{height-subsections/local-heights}
+
+
+\newpage
+\section{Vojta's Conjecture}
+\let\clearpage\relax\include{vojta-subsections/overview}
+
+\newpage
+\section{Application to GCD Problems}
+
+\subsection{Generalized GCD}
+\let\clearpage\relax\include{application-subsections/generalized-gcd}
+
+\subsection{Main Result}
+\let\clearpage\relax\include{application-subsections/main-result}
+
+\subsection{Applications of Main Result}
+\let\clearpage\relax\include{application-subsections/applications}
+
+\newpage
+\section{Conclusion}
+\let\clearpage\relax\include{conclusion}
+
+% References -----------------------------------------------------------------------------
+\newpage
+\printbibliography
+\newpage
+
+\end{document}

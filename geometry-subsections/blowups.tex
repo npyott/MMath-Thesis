@@ -1,0 +1,240 @@
+One of the advantages of algebraic geometry is the ability to analyze a space regardless of coordinates or embedding. 
+As such, we often look towards birational maps which capture the geometry of a given space but may transform into an easier to understand or better behaved space.
+One such way of constructing these birational maps comes from the idea of a blow up.
+We capture blow ups unique up to isomorphism using the following universal property definition.
+
+\begin{definition}[Blow up]
+    Let $Y \subseteq X$ be a closed subscheme.
+    The \textit{blowup of $X$ along $Y$}, with \textit{centre} $Y$, 
+    is a space $\wt{X}$ and a map $\pi : \wt X \to X$ which is an isomorphism on $X \sm Y$.
+    We denote $E = \pi^{-1}(Y)$ as the \textit{exceptional divisor}, which is an effective Cartier divisor.
+
+    Finally, for any space $W$ with closed subscheme $Z$ for which the ideal sheaf is locally invertible,
+    along with a map $\varphi : W \to X$ satisfying $Z =\varphi^{-1}(Y)$,
+    then there exists a unique map $\psi : W \to \wt X$ which satisfies $\pi \circ \psi = \varphi$.
+    This is captured by the following commutative diagram.
+
+    \[
+        \begin{tikzcd}
+            Z \arrow[r, hook] \arrow[ddr] \arrow[drr, dashed] & W \arrow[ddr] \arrow[drr, dashed] & \\
+            & & E \arrow[r, hook] \arrow[dl] & \wt X \arrow[dl] \\
+            & Y \arrow[r, hook] & X &
+        \end{tikzcd}
+    \]
+\end{definition}
+
+Let's investigate this definition by examining the example on the affine case ${X = \Spec(A)}$,
+where our closed subscheme $Y$ is described by an ideal $I = \langle f_1, \ldots, f_r \rangle$. 
+We claim that a good candidate for $\wt X$ is $\Proj(\bigoplus_{d \geq 0} I^dt^d)$,
+where $I^d = A$ and the parameter $t$ is kept to account for the degree in our graded ring.
+We may write $A[It]$ as a shorthand for the graded module in question.
+
+A natural place to start is by first establishing a map $\pi : \wt X \to X$.
+In this case, we have a very simple and natural map by taking $P \in \Proj(A[It])$ and considering $P \cap A$,
+which simply follows from the inclusion $A \hookrightarrow A[It]$.
+Under such a mapping, let's consider our exceptional divisor $E = \pi^{-1}(Y)$.
+Following the inclusion $Y \hookrightarrow X$ by prime ideals containing $I$,
+we have the equivalence below.
+\begin{align*}
+    P = \bigoplus_{d \geq 0} P_d t^d \in \pi^{-1}(Y) 
+        & \iff I \subseteq \pi(P) = P_0 \\
+        & \iff \forall d \geq 0, I^{d + 1}t^d = I \cdot I^dt^d \subseteq P_0 \cdot I^dt^d \subseteq P_dt^d. 
+\end{align*}
+Therefore, as $P \in E$ contains $I^{d + 1}t^d$ for the degree $d$ components of the homogeneous prime ideal $P$,
+our exceptional divisor $E$ may be thought of as cut out by the ideal sheaf $\cI_E = (\bigoplus_{d \geq 0} I^{d + 1}t^d)^{\sim}$.
+
+We check as well that this ideal sheaf is indeed invertible.
+To do so, consider for some $1 \leq j \leq r$ the section $f_j t \in A[It](1)$.
+On the open set $D_+(f_jt) \cong \Spec(A[It])_{(f_jt)}$, note we have
+\[
+    A[It]_{(f_jt)}
+        = A + \frac{1}{f_j}I + \frac{1}{f_j^2}I^2 + \cdots
+\]
+Note as well that since $f_j^k \in I^k$ for all $k \geq 1$, 
+it follows that we may cut off arbitrarily many terms from the start as $A \subseteq \frac{1}{f_j}I \subseteq \frac{1}{f_j^2}I^2$ and so forth.
+Likewise, taking the ideal sheaf associated to $E$ and localizing to $D_+(f_jt)$,
+we have from definition that
+\[
+    \cI_E|_{D_+(f_jt)}
+    = \left(\bigoplus_{d \geq 0} I^{d + 1}t^d\right)_{(f_jt)}
+    = I + \frac{1}{f_j}I^2 + \frac{1}{f_j^2}I^3 \cdots
+\]
+demonstrating that $\cI_E|_{D_+(f_j t)} \cong f_j \cO_{\wt X}|_{D_+(f_j t)}$.
+Note as well the parallels of $\cI_E$ to $\cO_{\wt X}(1)$ as they are the same invertible sheaf.
+
+Next, consider a pair $Z \hookrightarrow W$ with $\cI_Z$ invertible,
+and a map $\varphi : W \to X$ such that $Z = \varphi^{-1}(Y)$.
+With our map $\varphi$, it is easy to construct a map $\psi : W \to \wt X$ which factors through $\pi : \wt X \to X$ as for any $Q \in W$,
+\[
+    \psi(Q)= \bigoplus_{d \geq 0} (\varphi(Q) \cap I^d) t^d.
+\]
+A full verification of our universal property follows from Proposition II.7.14 \cite{Hartshorne_2013},
+and shows we have indeed constructed the blow up $\pi : \wt X \to X$.
+
+In fact, we have indeed shown that the blow up exists in general.
+We explore this and some consequences in the following propositions and corollaries.
+
+\begin{proposition}
+    Blow ups are locally defined. 
+    That is, given $U \subseteq X$ and a blow up $\pi : \wt X \to X$ with centre $Y$ and exceptional divisor $E$,
+    $\pi^{-1}(U)$ is the blow up of $U$ along $Y \cap U$ with exceptional divisor $E\cap \pi^{-1}(U)$.
+\end{proposition}
+
+\begin{proof}
+    To show this, we need only demonstrate the universal property.
+    For this, consider $Z \hookrightarrow W$ satisfying all necessary conditions. 
+    We may immediately draw the following diagram.
+    \[
+        \begin{tikzcd}
+            Z \arrow[r, hook] \arrow[d] & W \arrow[d] & E \cap \pi^{-1}(U) \arrow[r, hook] \arrow[d] \arrow[dll] & \pi^{-1}(U) \arrow[d] \arrow[dll] \\
+            Y \cap U \arrow[r, hook] \arrow[d] & U \arrow[d] & E \arrow[r, hook] \arrow[dll] & \wt X \arrow[dll] \\
+            Y & X
+        \end{tikzcd}
+    \]
+    Following our maps $Z \to Y$ and $W \to X$, 
+    we may use our universal property to determine a map $W \to \wt X$.
+    However, since it must commute with the map $W \to X$ which has image contained in $U$,
+    we see that we in-fact have a map $W \to \pi^{-1}(U)$,
+    which satisfies all requirements.
+\end{proof}
+
+\begin{corollary}
+    Let $\pi: \wt X \to X$ be a blow up along $Y$ with exceptional divisor $E$.
+    Then $\pi : \wt X \sm E \to X \sm Y$ is an isomorphism,
+    and hence $\pi$ is birational.
+\end{corollary}
+
+\begin{proof}
+    For this, we simply consider that $\pi^{-1}(X \sm Y)$ is the blow up of $X \sm Y$ along the empty set.
+    However, the empty set is already cut out by the ideal sheaf generated by $1$ on any open subset. 
+    Therefore $X \sm Y$ satisfies the universal property and hence is isomorphic to $\pi^{-1}(X \sm Y) = \wt X \sm E$.
+\end{proof}
+
+We also cite Exercise 23.2.A of \cite{Vakil_2022} in the following proposition.
+
+\begin{proposition}
+    Blow ups may be glued together.
+    That is, if $\cup_{i \in I} U_i$ is an open cover of $X$,
+    and there exists blow ups $\pi_i : \wt U_i \to U_i$ along center $Y \cap U_i$,
+    then there exists a blow up $\pi : \wt X \to X$ along center $Y$.
+\end{proposition}
+
+With the basics of construction covered, 
+let's examine some notable properties of blow ups.
+For our first example, let's see how blow ups separate crossing lines and hence could resolve singularities, 
+though we will not dive further into this as it is unnecessary for our cases.
+We first take a quick detour to define the \textit{strict transform}.
+
+\begin{lemma}
+    Let $Y, Z \subseteq X$ be closed subschemes.
+    If $\wt Z$ is the blow up of $Z$ along $Y \cap Z$ and $\wt X$ is the blow up of $X$ along $Y$,
+    then there exists a closed immersion $\wt Z \hookrightarrow \wt X$.
+    Moreover, we may draw the following commutative diagram.
+    \[
+        \begin{tikzcd}
+            \wt Z \arrow[r, hook] \arrow[d] & \wt X \arrow[d] \\
+            Z \arrow[r, hook] & X
+        \end{tikzcd}
+    \]
+\end{lemma}
+
+\begin{proof}
+    See Corollary II.7.15 of \cite{Hartshorne_2013}.
+\end{proof}
+
+\begin{definition}[strict/proper transform]
+    Taking $X, Y, Z$ and $\wt Z$ as above, we refer to  $\wt Z$ as the \textit{strict transform} of $Z$.
+\end{definition}
+
+\begin{proposition}
+    Let $Y \subseteq X$ be the intersection $Y = \cap_{i = 1}^r Y_i$ such that $\cI_Y = \sum_{i = 1}^r \cI_{Y_i}$.
+    Then if $\pi: \wt X \to X$ is the blow up of $X$ along $Y$,
+    then the intersection of the strict transforms of $Y_i$ is empty in $\wt X$.
+\end{proposition}
+
+\begin{proof}
+    To begin, we note that this suffices to prove locally since any intersection would lie in the preimage of some open subset of $X$.
+    Therefore, we may assume $X = \Spec(A)$, $Y = \Spec(A / I)$ for some ideal $I \subseteq A$, and $Y_i = \Spec(A / J_i)$ for some ideal $J_i \subseteq A$ for each $1 \leq i \leq r$.
+    Next, note that $Y \cap Y_i$ is then given as $V(I/J_i) \subseteq Y_i$,
+    so we may write each strict transform and our blow up $\wt X$ as
+    \[
+        \wt Y_i = \Proj\left(
+            \bigoplus_{d \geq 0} (I/J_i)^d t^d
+        \right), \qquad
+        \wt X = \Proj\left(
+            \bigoplus_{d \geq 0} I^d t^d
+        \right).
+    \]
+    With this, we may proceed by noting that there is a clear surjective graded ring homomorphism $A[It] \to A[(I/J_i) t]$ which gives each closed immersion.
+    Therefore, any prime ideal in the image of a given closed immersion must contain the kernel of this graded ring homomorphism.
+    Hence, if $P \in \cap_{i = 1}^r \wt Y_i$,
+    then by examining the degree one terms in each kernel,
+    it follows that $J_i t \subseteq P$ for each $1 \leq i \leq r$.
+    However, since $I = \sum_{i = 1}^r J_i$ by hypothesis,
+    we must have $I t \subseteq P$ and so $P$ contains all of $A[It]_+$,
+    which is a contradiction.
+\end{proof}
+
+Another useful way strict transforms and blow ups come together is in the pullback of an effective Cartier divisor.
+Let $\pi : \wt X \to X$ be a blow up of a non-singular variety with irreducible, non-singular center $Y$ of codimension at least 2 and exceptional divisor $E$.
+We will also assume that $\wt X$ is non-singular as well.
+The first objective is to determine the relation between $\Pic(\wt X)$ and $\Pic(X)$.
+
+To explore this further, recall that we have the exact sequence
+\[
+    \Z \to \Pic(\wt X) \to \Pic(\wt X \sm E) \to 0.
+\]
+In fact, this is a short exact sequence.
+Consider the fact that $\pi^* : K(X) \to K(\wt X)$ is an isomorphism as it is the pullback of a birational map.
+Thus, if $mE = \rmDiv(f)$ for some $m \in \Z$ and $f \in K(\wt X)$,
+then we may write $mE = \pi^*\rmDiv(g) = \rmDiv(g \circ \pi)$ for some $g \in K(X)$.
+However, this implies that $g$ may not vanish outside $Y$,
+but because $\codim(Y, X) \geq 2$,
+this is only possible if $g$ is a non-vanishing constant and $m = 0$.
+
+Next, we also have isomorphisms between $\Pic(\wt X \sm E)$, $\Pic(X \sm Y)$, and $\Pic(X)$,
+where the last isomorphism is due to the fact $\codim(Y, X) \geq 2$.
+Therefore, we may now write a short exact sequence as
+\[
+    0 \to \Z \to \Pic(\wt X) \to \Pic(X) \to 0
+\]
+Lastly, we also have a section $\pi^* : \Pic(X) \to \Pic(\wt X)$ which composes with the previous morphism as the identity.
+To confirm this, fix some Cartier divisor $D = \{(U_i, f_i)\}_{i = 1}^r \in \Pic(X)$.
+We then find that
+\begin{align*}
+    (\pi^* D)|_{\pi^{-1}(X \sm Y)}
+    & = \{(\pi^{-1}(U_i), f_i \circ \pi)\}|_{\wt X \sm E} \\
+    & = \{
+            (
+                \pi^{-1}(U_i) \cap \wt X \sm E, 
+                f_i \circ \pi|_{\wt X \sm E}
+            ) 
+        \} \\
+    & = \{
+            (
+                \pi|_{\wt X \sm E}^{-1}(U_i \cap X \sm Y),
+                f_i|_{X \sm Y} \circ \pi|_{\wt X \sm E}
+            )
+        \} \\
+    & = \pi|_{\wt X \sm E}^* D|_{X \sm Y}.
+\end{align*}
+As the map $\Pic(\wt X) \to \Pic(X)$ follows by restricting to $\Pic(\wt X \sm E)$,
+and then following $\pi|_{\wt X \sm E}*$ to $\Pic(X \sm Y)$,
+we see that this composition is indeed the identity on $\Pic(X)$.
+Therefore, we may write $\Pic(\wt X) \cong \Pic(X) \oplus \Z$.
+
+Since an effective Cartier divisor $D$ on $X$ corresponds to ideal sheaf of a closed subscheme via $\cL(-D)$, 
+it is natural for us to associate a strict transform $\wt D$ to this divisor.
+As such, locally writing out $D = \{(U_i, f_i)\}_{i = 1}^r$,
+we also consider the pullback
+\[
+    \pi^*D = \{(\pi^{-1}(U_i), f \circ \pi)\}_{i = 1}^r.
+\]
+In the case where $Y$ is a point, 
+we find that $\pi^*D = \wt D + \ord_Y(D) E$, where $E = \pi^{-1}(Y)$ is the exceptional divisor,
+following from Exercise 23.4.P of \cite{Vakil_2022}. 
+To clarify, $\ord_Y(D) \geq 0$ is defined such that if $\eta \in Y$ is the generic point,
+and $D|_U = \rmDiv(f)$ for some neighbourhood $U \subseteq X$ of $\eta$,
+then $f \in \Fm_\eta^{\ord_Y(D)} \sm \Fm_\eta^{\ord_Y(D) + 1}$.
+This is well-defined regardless of neighbourhood for the same reason the usual mapping from Cartier divisors to Weil divisors is.
+ 

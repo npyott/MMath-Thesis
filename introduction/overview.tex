@@ -1,0 +1,37 @@
+A persisting and fascinating example from which a lot of very difficult yet interesting questions may be asked is by considering integer sequences of the form $(d_n = a^n - b^n)_{n \geq 1}$ for some integers $a, b \in \Z$.
+From its very construction, some natural questions arise concerning divisibility given that $d_n | d_m$ whenever $n | m$,
+as well as the fact that for $b = 1$, the sequence $(a^n - 1)_{n \geq 1}$ is always one off from increasingly greater perfect power.
+
+In a paper by Bugeaud, Corjava, and Zannier \cite{BCZ_2002}, the following interesting relationship between neighbouring sequences $a^n - 1$ and $b^n - 1$ is shown in regards to their greatest common divisor.
+
+\begin{theorem}
+    Given two multiplicatively independent integers $a, b \in \Z$ at least $2$, and some $\varepsilon > 0$,
+    we may eventually determine some $N \geq 1$ such that for $n \geq N$ thereafter
+    \[
+        \gcd(a^n - 1, b^n - 1) < \exp(\varepsilon n).
+    \]
+\end{theorem}
+
+% Cite Diophantine Approximation prof from presentation
+When dealing with such sparse sequences,
+most methods of counting factors such as sieves will not suffice, and instead we turn towards Diophantine approximation.
+The proof produced by the authors here is first carried out with Schmidt's Subspace Theorem, 
+which is a very powerful result in modern Diophantine approximation.
+
+Our trick for analyzing these points will be to acknowledge that powers of integers fall into only so many primes,
+exactly the finite primes which divide our initial integers.
+From here, we are able to analyze the height relative to this finite set of primes and force a contradiction by using the tools of Diophantine geometry to conclude that infinitely many integers belong where only finitely many should be.
+This technique is standard such as the use of Roth's theorem on the so-called $S$-unit equation,
+or using Siegel's Theorem on elliptic curves to conclude finitely many integer points.
+
+With this in mind, it is natural to explore generalizations of the \cite{BCZ_2002} result to further geometries as well as related problems.
+One such tool which generalizes the Subspace Theorem and Siegel's Theorem is a main conjecture of Vojta.
+By using algebraic heights to relate GCDs and Vojta's conjecture, 
+we will use blowups of projective space and products of elliptic curves to find various conditional results by Silverman.
+To obtain more context on Vojta's conjecture applied to blowups,
+we will mention McKinnon's paper to show a particular case of blowups of products of elliptic curves.
+
+This thesis is heavy in background as most of the tools used by McKinnon and Silverman rely on the extensive machinery of algebraic geometry. 
+Our first objective will be to cover the main definitions and theorems used to determine the canonical class on blowups and fibred products right from the definition of a sheaf.
+The machinery built up along the way will also be used to briefly cover Weil's height machine and
+some basic properties of the group law on elliptic curves.
